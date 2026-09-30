@@ -1,0 +1,63 @@
+{
+  "bannerTitle": "A little space for something special",
+  "bannerSub": "Your future feature belongs here.",
+  "bannerImage": "",
+  "name": "Your name",
+  "bio": "A little introduction goes here. Make this space yours!",
+  "avatar": "",
+  "shortcuts": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "bookmarks": [
+    {
+      "id": 1,
+      "title": "Music",
+      "url": "https://open.spotify.com",
+      "appUrl": "spotify:",
+      "category": "Everyday",
+      "icon": "♫"
+    },
+    {
+      "id": 2,
+      "title": "Inspiration",
+      "url": "https://www.pinterest.com",
+      "category": "Everyday",
+      "icon": "✿"
+    },
+    {
+      "id": 3,
+      "title": "Videos",
+      "url": "https://www.youtube.com",
+      "category": "Everyday",
+      "icon": "▶"
+    },
+    {
+      "id": 4,
+      "title": "Mail",
+      "url": "https://mail.google.com",
+      "category": "Useful",
+      "icon": "✉"
+    },
+    {
+      "id": 5,
+      "title": "Maps",
+      "url": "https://maps.google.com",
+      "category": "Useful",
+      "icon": "⌖"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "text": "Welcome to my little corner of the internet! ☘",
+      "date": "Sep 29, 2026"
+    }
+  ]
+}
