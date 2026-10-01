@@ -1,1264 +1,258 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Homepage</title>
-<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Sunshiney&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#f7f7ea;
-  --paper:#fffef7;
-  --head:#cce994;
-  --soft:#e9f4d0;
-  --ink:#344737;
-  --muted:#667a60;
-  --border:#9ab873;
-  --strong:#719a50;
-  --shadow:#cde4a8;
-  --dot:#d7e9bd;
-  --feature:#dff3da;
-  --bubble:#fffbe9;
-  --title:#755c49;
-  --accent:#78ba66;
-}
-html.night{
-  --bg:#DCE7FF;
-  --paper:#F5F8FF;
-  --head:#8AAAF0;
-  --soft:#d4e1fc;
-  --ink:#304B78;
-  --muted:#526e9a;
-  --border:#9ab7ea;
-  --strong:#7697d2;
-  --shadow:#b8cdf3;
-  --dot:#c2d4fb;
-  --feature:#cbe0ff;
-  --bubble:#F5F8FF;
-  --title:#304B78;
-  --accent:#648acf;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  color:var(--ink);
-  font:14px Verdana,sans-serif;
-  background:radial-gradient(var(--dot) 1.5px,transparent 1.5px) 0 0/24px 24px,var(--bg);
-}
-button,input,textarea,select{font:inherit}
-button,a,summary{cursor:pointer}
-button:focus-visible,a:focus-visible,input:focus-visible,
-textarea:focus-visible,select:focus-visible{
-  outline:3px solid var(--accent);
-  outline-offset:3px;
-}
-button:disabled{opacity:.55;cursor:wait}
-.shell{max-width:1120px;margin:auto;padding:25px 22px 45px}
-.topline{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:14px;margin-bottom:15px;
-}
-.home-label{letter-spacing:.14em;font-weight:bold;color:var(--strong)}
-.profile-picker{display:flex;align-items:center;gap:9px;font-size:12px}
-.profile-switch{
-  position:relative;width:64px;height:33px;padding:3px;
-  border:1.5px solid var(--strong);border-radius:22px;
-  background:var(--head);box-shadow:2px 2px 0 var(--shadow);
-}
-.profile-switch span{
-  display:block;width:25px;height:25px;border-radius:50%;
-  background:var(--paper);box-shadow:0 1px 3px #34473733;
-  transition:transform .2s;
-}
-.profile-switch[aria-checked="true"] span{transform:translateX(30px)}
-.site{
-  border:2px solid var(--strong);border-radius:18px;
-  background:var(--paper);box-shadow:7px 7px 0 var(--shadow);
-  overflow:hidden;
-}
-.mast{
-  min-height:96px;padding:17px 24px;
-  background:var(--head);border-bottom:2px solid var(--strong);
-}
-.clock{font:22px Sunshiney,cursive;position:relative;z-index:3}
-.feature{
-  position:relative;z-index:2;margin:20px 24px 22px;
-  min-height:390px;padding:23px 52px 18px;
-  border:1.5px solid var(--border);border-radius:14px;
-  background:var(--feature);background-size:cover;background-position:center;
-}
-.bubble{
-  position:relative;isolation:isolate;top:-129px;
-  width:min(100%,820px);height:345px;
-  margin:20px auto 0;padding:14px 76px 35px;
-}
-.blob{
-  position:absolute;z-index:-1;inset:0;width:100%;height:100%;
-  overflow:visible;filter:drop-shadow(0 7px 0 #5276ad33);
-}
-.blob path{fill:var(--bubble)}
-.arch{display:block;width:100%;height:126px;overflow:visible}
-.arch text{
-  fill:var(--title);font-family:"Cherry Bomb One",system-ui;
-  font-weight:400;font-size:34px;
-}
-.arch .subtitle{fill:var(--muted);font-size:17px}
-.slots{
-  max-width:520px;margin:-5px auto 0;display:grid;
-  grid-template-columns:repeat(4,1fr);gap:24px 25px;
-}
-.slot{
-  position:relative;width:46px;height:46px;justify-self:center;
-  border:2px dashed var(--border);border-radius:14px;
-  background:var(--soft);
-}
-.slot:nth-child(1){transform:translate(-8px,0)}
-.slot:nth-child(2){transform:translate(6px,16px)}
-.slot:nth-child(3){transform:translate(-5px,2px)}
-.slot:nth-child(4){transform:translate(7px,15px)}
-.slot:nth-child(5){transform:translate(8px,0)}
-.slot:nth-child(6){transform:translate(-6px,16px)}
-.slot:nth-child(7){transform:translate(5px,2px)}
-.slot:nth-child(8){transform:translate(-7px,15px)}
-.slot.filled{border-color:transparent;background:transparent}
-.slot-open,.slot-add{
-  display:grid;place-items:center;width:100%;height:100%;
-  padding:4px;border:0;border-radius:12px;background:transparent;
-  color:var(--muted);text-decoration:none;
-}
-.slot-add{font-size:24px;opacity:.6}
-.slot img{width:100%;height:100%;object-fit:contain}
-.slot-edit{
-  position:absolute;z-index:3;right:-10px;top:-10px;
-  width:21px;height:21px;padding:0;border:1px solid var(--border);
-  border-radius:50%;background:var(--paper);color:var(--muted);
-}
-.feature-pencil{
-  position:absolute;z-index:4;right:18px;top:18px;
-  width:36px;height:36px;border:0;padding:0;
-  background:transparent;color:white;font-size:26px;opacity:.5;
-}
-.feature-pencil:hover{opacity:.85}
-.feature.editing .feature-pencil{opacity:1}
-.feature.editing .slot.filled{border-color:var(--border)}
-.character{
-  height:104px;margin-top:-135px;
-  display:flex;justify-content:center;align-items:flex-end;
-}
-.character-frame{
-  width:158px;height:104px;display:flex;
-  flex-direction:column;align-items:center;justify-content:center;gap:5px;
-  border:2px dashed var(--border);border-radius:47% 47% 14px 14px;
-  background:var(--paper);color:var(--muted);
-  font-family:"Cherry Bomb One",system-ui;
-}
-.character-frame strong{font-size:12px;font-weight:400}
-.character-frame small{font-size:10px}
-.layout{
-  display:grid;grid-template-columns:280px minmax(0,1fr);
-  gap:20px;padding:0 24px 26px;
-}
-.side{display:flex;flex-direction:column;gap:16px}
-.card{
-  border:1.5px solid var(--border);border-radius:13px;
-  background:var(--paper);box-shadow:3px 3px 0 var(--shadow);
-  overflow:hidden;
-}
-.card-head{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:10px 14px;border-bottom:1px solid var(--border);
-  font-size:14px;font-weight:bold;
-  background:radial-gradient(circle,var(--dot) 1px,transparent 1.3px) 0 0/13px 13px,var(--soft);
-}
-.profile{padding:15px;display:flex;gap:12px;align-items:flex-start}
-.avatar{
-  flex:none;width:85px;height:92px;border:5px solid var(--paper);
-  outline:1px solid var(--border);border-radius:22px;
-  background:var(--head);overflow:hidden;
-  display:grid;place-items:center;font-size:42px;
-}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.profile-info{min-width:0}
-.profile-info h2{
-  font:23px Sunshiney,cursive;margin:8px 0 5px;overflow-wrap:anywhere;
-}
-.profile-info p{
-  color:var(--muted);font-size:13px;line-height:1.6;
-  white-space:pre-wrap;overflow-wrap:anywhere;margin:0;
-}
-.passport-line{font-size:11px;color:var(--muted)}
-.quick-jump{padding:12px 14px;display:grid;gap:8px}
-.quick-jump button{
-  text-align:left;padding:10px;border:1px solid var(--border);
-  border-radius:7px;background:var(--soft);color:var(--ink);
-}
-.tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:13px}
-.tab{
-  border:1.5px solid var(--border);border-radius:9px 9px 0 0;
-  padding:11px 17px;background:var(--soft);color:var(--ink);font-weight:bold;
-}
-.tab.active{background:var(--paper);border-bottom-color:var(--paper)}
-.panel{display:none}
-.panel.active{display:block}
-.section-head{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:10px;margin-bottom:12px;
-}
-.section-head h2{font:22px Sunshiney,cursive;margin:0}
-.section-head p{font-size:13px;color:var(--muted);margin:3px 0 0}
-.btn{
-  border:1.5px solid var(--strong);background:var(--paper);
-  color:var(--ink);border-radius:8px;padding:8px 12px;
-  font-size:13px;font-weight:bold;
-}
-.btn:hover{background:var(--soft)}
-.btn.primary{background:var(--accent);color:white}
-.remove{border:0;background:transparent;color:var(--muted);padding:2px 4px}
-.category{margin-bottom:18px}
-.category h3{
-  margin:0;padding:5px 8px;border-radius:5px;font-size:12px;
-  background:radial-gradient(circle,var(--dot) 1px,transparent 1.3px) 0 0/13px 13px,var(--soft);
-}
-.bookmark{
-  display:flex;align-items:center;gap:4px;min-height:32px;
-  padding:3px 8px;border-bottom:1px solid var(--border);
-}
-.bookmark:hover{background:var(--soft)}
-.bookmark a{
-  display:flex;align-items:center;gap:12px;flex:1;min-width:0;
-  min-height:26px;color:inherit;text-decoration:none;
-}
-.bookmark strong{font-size:13px;font-weight:400;flex:1;overflow-wrap:anywhere}
-.bookmark small{
-  color:var(--muted);font-size:11px;max-width:42%;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.post{
-  border:1px solid var(--border);border-radius:12px;
-  padding:15px;margin-bottom:11px;
-}
-.post-top{display:flex;gap:10px;align-items:center}
-.post-avatar{
-  width:38px;height:38px;border-radius:9px;background:var(--soft);
-  overflow:hidden;display:grid;place-items:center;
-}
-.post-avatar img{width:100%;height:100%;object-fit:cover}
-.post-name{font-weight:bold}
-.date{font-size:12px;color:var(--muted)}
-.post-body{white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px;line-height:1.6;margin:12px 0}
-.post-foot{
-  display:flex;justify-content:space-between;align-items:center;
-  padding-top:9px;border-top:1px dashed var(--border);
-  font-size:12px;color:var(--muted);
-}
-.empty{
-  padding:28px;text-align:center;border:1px dashed var(--border);
-  border-radius:12px;color:var(--muted);background:var(--paper);
-}
-.footer{text-align:center;color:var(--muted);font-size:12px;margin:25px 0}
-.storage{
-  margin-top:24px;padding:16px;border:1px solid var(--border);
-  border-radius:12px;background:var(--paper);font-size:13px;
-}
-.form{display:grid;gap:10px}
-.form label{display:grid;gap:5px;font-size:13px;font-weight:bold}
-.form input,.form textarea,.form select{
-  width:100%;border:1px solid var(--border);border-radius:8px;
-  padding:10px;background:var(--paper);color:var(--ink);
-}
-.form textarea{min-height:90px;resize:vertical}
-.form small{color:var(--muted);line-height:1.6}
-.actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
-#storageStatus{font-size:12px;color:var(--muted);margin:10px 0 0}
-dialog{
-  width:min(440px,calc(100% - 30px));padding:0;
-  border:2px solid var(--strong);border-radius:15px;
-  background:var(--paper);color:var(--ink);
-  box-shadow:9px 9px 0 var(--shadow);
-}
-dialog::backdrop{background:#253c2b85}
-.dialog-body{padding:17px}
-.notification-badge{
-  position:absolute;z-index:3;top:-8px;right:-8px;
-  min-width:18px;height:18px;padding:0 4px;
-  border-radius:20px;background:#cf685f;color:white;
-  font:600 10px/18px Verdana,sans-serif;text-align:center;
-  box-shadow:0 0 0 2px var(--bubble);pointer-events:none;
-}
-.feature.editing .notification-badge{display:none}
-@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-@media(hover:hover) and (prefers-reduced-motion:no-preference){
-  .slot-open:hover img{animation:hop .65s ease-in-out infinite}
-}
-@media(max-width:800px){
-  .layout{grid-template-columns:1fr}
-  .side{display:grid;grid-template-columns:1fr 1fr}
-  .feature{padding-left:35px;padding-right:35px}
-  .bubble{top:-104px;padding-left:50px;padding-right:50px}
-  .character{margin-top:-110px}
-}
-@media(max-width:560px){
-  .shell{padding:10px 9px 30px}
-  .topline{gap:8px}
-  .home-label{font-size:12px;letter-spacing:.08em}
-  .profile-picker{gap:6px;font-size:11px}
-  .mast{min-height:87px;padding:14px 17px}
-  .clock{font-size:17px}
-  .feature{margin:12px 13px 18px;padding:48px 15px 14px;min-height:350px}
-  .bubble{height:300px;top:-66px;padding:14px 24px 24px}
-  .arch{height:108px}
-  .arch text{font-size:46px}
-  .arch .subtitle{font-size:29px}
-  .slots{max-width:250px;gap:16px 12px}
-  .slot{width:32px;height:32px;border-radius:10px}
-  .slot:nth-child(1){transform:translate(-3px,0)}
-  .slot:nth-child(2){transform:translate(3px,7px)}
-  .slot:nth-child(3){transform:translate(-3px,1px)}
-  .slot:nth-child(4){transform:translate(3px,6px)}
-  .slot:nth-child(5){transform:translate(3px,0)}
-  .slot:nth-child(6){transform:translate(-3px,7px)}
-  .slot:nth-child(7){transform:translate(3px,1px)}
-  .slot:nth-child(8){transform:translate(-3px,6px)}
-  .slot-open,.slot-add{padding:2px}
-  .slot-edit{width:19px;height:19px;right:-9px;top:-9px}
-  .feature-pencil{top:12px;right:10px}
-  .character{height:94px;margin-top:-72px}
-  .character-frame{height:90px}
-  .layout{padding:0 13px 18px;gap:13px}
-  .side{display:flex}
-  .tab{padding:9px 12px;font-size:13px}
-  .bookmark small{max-width:36%;font-size:10px}
-}
-@media(prefers-reduced-motion:reduce){
-  .profile-switch span{transition:none}
-}
-</style>
-</head>
-<body>
-<div class="shell">
-  <div class="topline">
-    <span class="home-label">Homepage</span>
-    <div class="profile-picker">
-      <span>Profile 1</span>
-      <button id="profileSwitch" class="profile-switch"
-        type="button" role="switch" aria-checked="false"
-        aria-label="Switch to profile 2"><span></span></button>
-      <span>Profile 2</span>
-    </div>
-  </div>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#b9dc72"><title>Homepage</title><meta name="description" content="A personal Heisei retro homepage for bookmarks, notes, and little things."><link rel="icon" href="https://raw.githubusercontent.com/aleciarf/homepage/main/assets/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Sunshiney&display=swap" rel="stylesheet"><style>
+:root{font-family:Verdana,'Trebuchet MS',sans-serif;color:#344737;background:#f5f5e8}*{box-sizing:border-box}body{margin:0;background:radial-gradient(#d7e9bd 1.5px,transparent 1.5px) 0 0/24px 24px,#f7f7ea}button,input,textarea,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #78b955;outline-offset:2px}.shell{max-width:1120px;margin:auto;padding:25px 22px 70px}.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px;font-size:13px}.tiny{letter-spacing:.16em;font-weight:bold;color:#709a45}.topline span:last-child{background:white;border:1px solid #9cb86a;border-radius:20px;padding:7px 12px}.site{border:2px solid #719a50;border-radius:18px;background:#fffef7;box-shadow:7px 7px 0 #cde4a8;overflow:hidden}.mast{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px;background:#cce994;border-bottom:2px solid #719a50}.brand{display:flex;align-items:center;gap:12px}.brand-icon{width:43px;height:43px;border:2px solid #659750;border-radius:13px;background:#fdfcf4;display:grid;place-items:center;font-size:30px;color:#55ad63;transform:rotate(-6deg)}h1{font-family:Sunshiney,cursive;font-weight:400;font-size:36px;line-height:1;margin:0;letter-spacing:-.06em}small{font-size:12px}.brand small{display:block;margin-top:4px;letter-spacing:.14em;color:#5f7d43}.pill{background:#fffdf1;border:1.5px solid #739758;border-radius:30px;padding:8px 13px;font-size:13px;color:#4b7141}.banner{min-height:235px;margin:22px 24px 18px;border:2px dashed #93b66e;border-radius:14px;background:linear-gradient(135deg,#e9f3cf,#f8f9e9 55%,#dfefc0);position:relative;display:grid;place-items:center;overflow:hidden;text-align:center}.banner.has-image{background-size:cover;background-position:center}.banner.has-image .banner-inner{background:#fffdf1d9;border:1px solid #93b66e;border-radius:12px;padding:10px 18px}.banner-inner{padding:18px}.banner .spark{font-size:27px;color:#6bac55}.banner h2{font-family:Sunshiney,cursive;font-size:30px;font-weight:normal;margin:6px 0;color:#547d44}.banner p{font-size:13px;margin:0;color:#6a8d58}.banner .edit-banner{position:absolute;right:12px;bottom:12px}.mini-btn,.action{border:1.5px solid #789d56;background:#fffefa;color:#426b3c;border-radius:8px;padding:8px 12px;font-weight:bold;font-size:13px}.mini-btn:hover,.action:hover{background:#e5f4c9}.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:20px;padding:0 24px 26px}.card{background:#fff;border:1.5px solid #9ab873;border-radius:13px;box-shadow:3px 3px 0 #e0edc3;overflow:hidden}.card-head{padding:10px 14px;background:#e9f4d0;border-bottom:1px solid #b3ca8d;font-weight:bold;font-size:14px;display:flex;justify-content:space-between;align-items:center}.side{display:flex;flex-direction:column;gap:16px}.profile{padding:17px;text-align:center}.avatar{display:block;width:105px;height:105px;margin:0 auto 13px;border:5px solid #f6f6e6;outline:1px solid #9ab873;border-radius:18px;object-fit:cover;background:#cae79c;font-size:58px;line-height:94px;text-align:center}.profile h2{font-family:Sunshiney,cursive;font-size:23px;margin:0 0 5px}.profile p{font-size:14px;line-height:1.5;color:#667a60;margin:0 0 13px;white-space:pre-wrap}.stamp{display:inline-block;font-size:12px;border-radius:20px;padding:5px 10px;background:#e9f3d1;border:1px solid #b1ca8a;margin-bottom:13px}.side-links{padding:12px 14px;display:grid;gap:8px}.side-links button{width:100%;text-align:left;background:#fbfcf2;border:1px solid #d3e5b5;border-radius:7px;padding:10px;color:#477042}.side-links button:hover{background:#e7f4d3}.content{min-width:0}.tabs{display:flex;flex-wrap:wrap;gap:7px;padding:0 1px;margin-bottom:13px}.tab{border:1.5px solid #9ab873;background:#eaf4d5;color:#557646;border-radius:9px 9px 0 0;padding:11px 17px;font-size:14px;font-weight:bold}.tab.active{background:#fff;border-bottom-color:#fff;color:#345e32}.panel{display:none}.panel.active{display:block}.section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.section-head h2{font-family:Sunshiney,cursive;font-size:22px;margin:0;color:#507b42}.section-head p{font-size:13px;color:#788b6d;margin:3px 0 0}.category{margin-bottom:18px}.category-title{font-size:14px;font-weight:bold;color:#507b42;margin:0 0 9px}.bookmark-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.bookmark{min-height:82px;padding:12px;background:#fff;border:1px solid #bed2a0;border-radius:10px;display:flex;align-items:center;gap:9px;text-decoration:none;color:#3d5e3c;position:relative}.bookmark:hover{background:#f4fae9;transform:translateY(-2px)}.bookmark .ico{background:#eaf4d5;border-radius:8px;width:39px;height:39px;flex:none;display:grid;place-items:center;font-size:21px}.bookmark strong{font-size:13px;overflow-wrap:anywhere}.bookmark small{display:block;color:#829178;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:115px}.remove{border:0;background:transparent;color:#8b977f;font-size:18px;padding:1px 5px}.bookmark .remove{position:absolute;right:3px;top:2px}.bookmark .edit-link{right:25px;font-size:14px}.bookmark-main{display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit;min-width:0;flex:1}.bookmark .app-badge{font-size:11px;color:#59844a}.post{border:1px solid #bbd19c;background:#fff;border-radius:12px;padding:15px;margin-bottom:11px}.post-top{display:flex;gap:10px;align-items:center}.post-avatar{width:38px;height:38px;border-radius:9px;background:#dcf0b5;display:grid;place-items:center;overflow:hidden}.post-avatar img{width:100%;height:100%;object-fit:cover}.post-name{font-size:14px;font-weight:bold}.date{font-size:12px;color:#8b9a80}.post-body{font-size:15px;line-height:1.6;white-space:pre-wrap;margin:12px 0}.post-foot{border-top:1px dashed #d4e3bd;padding-top:9px;font-size:12px;color:#79946a;display:flex;justify-content:space-between}.empty{padding:28px;text-align:center;border:1px dashed #b4ca91;border-radius:12px;color:#79906b;background:#fcfdf7;font-size:14px}.form{display:grid;gap:10px}.form label{display:grid;gap:5px;font-size:13px;font-weight:bold;color:#55764d}.form input,.form textarea,.form select{width:100%;border:1px solid #afc893;border-radius:8px;padding:10px;background:#fff;color:#344737}.form textarea{min-height:90px;resize:vertical}.actions{display:flex;gap:8px;justify-content:flex-end}.action.primary{background:#78ba66;color:#fff;border-color:#518e4c}.action.primary:hover{background:#579b50}dialog{border:2px solid #709b51;border-radius:15px;box-shadow:9px 9px 0 #cfe4b6;width:min(440px,calc(100% - 30px));padding:0;color:#344737}dialog::backdrop{background:#253c2b85}.dialog-body{padding:17px}.footer{text-align:center;color:#739466;font-size:12px;margin:25px 0 0}.footer span{color:#55a965}@media(max-width:800px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}.bookmark-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.shell{padding:10px 9px 40px}.mast{padding:13px}.mast .pill{display:none}.banner{margin:14px 13px;min-height:185px}.banner h2{font-size:24px}.layout{padding:0 13px 18px;gap:13px}.side{display:block}.side .card{margin-bottom:13px}.bookmark-grid{grid-template-columns:1fr 1fr}.bookmark{padding:9px;min-height:70px}.bookmark .ico{width:30px;height:30px;font-size:17px}.bookmark small{max-width:80px}.tabs{gap:4px}.tab{padding:9px 12px;font-size:13px}}
+</style><style>
+/* Reference-inspired feature bubble and passport card */
+.feature-stage{margin:20px 24px 22px;min-height:420px;position:relative;border:1.5px solid #b2cda3;border-radius:14px;background:linear-gradient(180deg,#d5eec7 0%,#dff3da 55%,#d4e5bc 100%);overflow:hidden;padding:23px 23px 18px;text-align:center}.feature-stage.has-image{background-size:cover;background-position:center}.feature-label{position:absolute;z-index:2;top:13px;left:17px;background:#76ae70;color:#fff;border-radius:20px;padding:7px 14px;transform:rotate(-5deg);font-weight:bold;font-size:13px;box-shadow:2px 3px 0 #4f8651}.feature-bubble{position:relative;z-index:1;max-width:850px;min-height:255px;margin:18px auto 0;background:#fffbe9;border-radius:48% 45% 46% 44% / 25% 29% 30% 26%;border:2px solid #f5f0d8;box-shadow:0 8px 0 #91b58544;padding:24px 52px 40px}.feature-bubble:after{content:'';position:absolute;bottom:-17px;left:48%;width:35px;height:35px;background:#fffbe9;transform:rotate(45deg);border-radius:3px;z-index:-1}.bubble-heading h2{font-family:Sunshiney,cursive;font-weight:400;color:#755c49;font-size:30px;line-height:1.25;margin:0 0 4px}.bubble-heading p{font-size:13px;color:#83ae73;margin:0}.shortcut-slots{max-width:520px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px 25px;margin:18px auto 0}.shortcut-slots span{width:46px;height:46px;border:2px dashed #d6dcbe;border-radius:14px;background:#f5f3e6;justify-self:center}.feature-bubble .edit-banner{position:absolute;right:48px;bottom:20px;background:#f7f4e4}.character-placeholder{height:116px;display:flex;justify-content:center;align-items:end;margin-top:16px}.character-frame{width:158px;height:112px;border:2px dashed #87b186;border-radius:47% 47% 14px 14px;background:#f3fae9c9;color:#79a373;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}.character-frame span{font-size:23px}.character-frame strong{font-size:12px}.character-frame small{font-size:10px}.profile{padding:15px;background:linear-gradient(110deg,#fffeef,#ebf8e8)}.passport-photo{float:left;width:98px;margin:0 12px 4px 0}.passport-photo .avatar{width:85px;height:92px;line-height:84px;font-size:48px;margin:0 auto 4px;border-radius:22px}.photo-caption{display:block;font-size:10px;color:#7d825f;border:1px solid #adc996;background:#fffbea;border-radius:4px;transform:rotate(-4deg);padding:2px}.passport-info{text-align:left;min-height:160px}.passport-line{font-size:11px;color:#86a373}.passport-info h2{margin-top:8px}.passport-info p{font-size:13px}.passport-info .stamp{font-size:10px}.passport-info button{margin-top:3px}.category-title{display:inline-block;background:#fffbee;border-radius:40% 45% 43% 44%;padding:7px 15px;border:1px solid #d9e6bd}@media(max-width:560px){.feature-stage{margin:12px 13px 18px;padding:18px 8px 12px;min-height:380px}.feature-bubble{min-height:240px;margin-top:25px;padding:26px 14px 48px;border-radius:40% 43% 39% 41% / 18% 20% 19% 18%}.bubble-heading h2{font-size:23px}.shortcut-slots{gap:8px;margin-top:15px}.shortcut-slots span{width:35px;height:35px;border-radius:10px}.feature-bubble .edit-banner{right:50%;transform:translateX(50%);bottom:9px;white-space:nowrap}.character-placeholder{height:95px}.character-frame{height:90px}}
+</style><style>
+/* Give the speech bubble a complete oval silhouette inside the stage. */
+.brand h1{font-family:'Cherry Bomb One',system-ui;font-weight:400;font-size:31px;letter-spacing:0;line-height:1.2}
+.feature-stage{padding-left:44px;padding-right:44px;min-height:455px}
+.feature-bubble{width:min(100%,780px);max-width:none;min-height:275px;margin:20px auto 0;padding:32px 70px 44px;border-radius:50% / 44%;box-shadow:0 8px 0 #91b58544}
+.bubble-heading h2{font-family:'Cherry Bomb One',system-ui;font-weight:400;font-size:27px;line-height:1.35}
+.bubble-heading p,.feature-label,.character-frame strong,.character-frame small{font-family:'Cherry Bomb One',system-ui;font-weight:400}
+.character-placeholder{margin-top:20px}
+@media(max-width:800px){.feature-stage{padding-left:24px;padding-right:24px}.feature-bubble{width:min(100%,690px);padding-left:45px;padding-right:45px}}
+@media(max-width:560px){.brand h1{font-size:27px}.feature-stage{padding:18px 16px 14px;min-height:425px}.feature-bubble{width:100%;min-height:265px;margin-top:30px;padding:33px 28px 52px;border-radius:48% / 27%}.bubble-heading h2{font-size:21px}.bubble-heading p{font-size:12px}.shortcut-slots{max-width:250px;gap:8px}.shortcut-slots span{width:32px;height:32px}.character-placeholder{margin-top:20px}}
+</style><style>
+.arched-title{margin:0 auto!important;width:min(100%,700px);height:112px;line-height:1}.arched-title svg{display:block;width:100%;height:100%;overflow:visible}.arched-title text{fill:#755c49;font-family:'Cherry Bomb One',system-ui;font-weight:400}.bubble-heading p{margin-top:-18px}.feature-bubble{min-height:315px;padding-top:15px}.shortcut-slots{margin-top:20px}@media(max-width:560px){.arched-title{height:95px}.bubble-heading p{margin-top:-13px}.feature-bubble{min-height:295px;padding-top:12px}}
+</style><style>
+.feature-stage{padding-left:52px;padding-right:52px;overflow:visible}
+.feature-bubble{width:min(100%,740px);min-height:330px;border-radius:50%;padding:12px 72px 46px;overflow:visible}
+.feature-bubble:after{bottom:-15px}
+.feature-stage>.edit-banner{position:absolute;z-index:3;top:18px;right:18px;bottom:auto;background:#fffbea}
+.feature-bubble .edit-banner{display:none}
+.arched-title{height:122px}.arched-title svg{overflow:visible}.bubble-heading p{margin-top:-10px}.shortcut-slots{margin-top:18px}
+@media(max-width:800px){.feature-stage{padding-left:35px;padding-right:35px}.feature-bubble{padding-left:50px;padding-right:50px}}
+@media(max-width:560px){.feature-stage{padding-left:15px;padding-right:15px;padding-top:47px}.feature-stage>.edit-banner{top:12px;right:10px;font-size:11px;padding:6px 8px}.feature-bubble{width:100%;min-height:295px;padding:3px 23px 44px;border-radius:50%}.arched-title{height:105px}.bubble-heading p{margin-top:-10px}.shortcut-slots{margin-top:13px}}
+</style><style>
+/* Wide organic speech shape inspired by the supplied game UI. */
+.feature-bubble{width:min(100%,820px);height:345px;min-height:0;padding:14px 76px 35px;background:transparent;border:0;border-radius:0;box-shadow:none;position:relative;isolation:isolate}
+.feature-bubble:after{content:none}
+.blob-shape{position:absolute;z-index:-1;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 7px 0 #91b58544)}
+.blob-shape path{fill:#fffbe9}
+.arched-title{height:126px;width:min(100%,720px)}.arched-title svg{transform:translateY(2px)}.bubble-heading p{margin-top:-12px}.shortcut-slots{margin-top:8px}
+.feature-stage{min-height:490px}.character-placeholder{height:104px;margin-top:0}
+@media(max-width:800px){.feature-bubble{padding-left:52px;padding-right:52px}}
+@media(max-width:560px){.feature-stage{min-height:455px}.feature-bubble{height:300px;min-height:0;padding:14px 24px 24px}.arched-title{height:108px}.bubble-heading p{margin-top:-8px}.shortcut-slots{margin-top:4px}.character-placeholder{height:94px}}
+</style><style>
+/* Echo the broad top and lower contour without stretching glyph spacing. */
+.shortcut-slots{margin-top:2px}
+.shortcut-slots span:nth-child(4n+1),.shortcut-slots span:nth-child(4n){transform:translateY(8px)}
+.shortcut-slots span:nth-child(4n+2),.shortcut-slots span:nth-child(4n+3){transform:translateY(-3px)}
+@media(max-width:560px){.shortcut-slots{margin-top:0}.shortcut-slots span:nth-child(4n+1),.shortcut-slots span:nth-child(4n){transform:translateY(5px)}.shortcut-slots span:nth-child(4n+2),.shortcut-slots span:nth-child(4n+3){transform:translateY(-2px)}}
+</style><style>
+.bubble-heading p{position:relative;top:-27px;margin-bottom:-13px}
+.shortcut-slots{margin-top:2px}
+.shortcut-slots span:nth-child(1){transform:translate(-9px,12px)}
+.shortcut-slots span:nth-child(2){transform:translate(8px,-3px)}
+.shortcut-slots span:nth-child(3){transform:translate(-6px,18px)}
+.shortcut-slots span:nth-child(4){transform:translate(10px,2px)}
+.shortcut-slots span:nth-child(5){transform:translate(7px,4px)}
+.shortcut-slots span:nth-child(6){transform:translate(-11px,11px)}
+.shortcut-slots span:nth-child(7){transform:translate(9px,8px)}
+.shortcut-slots span:nth-child(8){transform:translate(-8px,6px)}
+@media(max-width:560px){.bubble-heading p{top:-19px;margin-bottom:-7px}.shortcut-slots span:nth-child(1){transform:translate(-4px,7px)}.shortcut-slots span:nth-child(2){transform:translate(4px,-2px)}.shortcut-slots span:nth-child(3){transform:translate(-3px,9px)}.shortcut-slots span:nth-child(4){transform:translate(4px,2px)}.shortcut-slots span:nth-child(5){transform:translate(3px,3px)}.shortcut-slots span:nth-child(6){transform:translate(-5px,6px)}.shortcut-slots span:nth-child(7){transform:translate(4px,5px)}.shortcut-slots span:nth-child(8){transform:translate(-4px,3px)}}
+</style><style>
+.arched-title .feature-subtitle{fill:#83ae73;font-family:'Cherry Bomb One',system-ui;font-size:17px;font-weight:400}
+.shortcut-slots{row-gap:24px;margin-top:-5px}
+.shortcut-slots span:nth-child(1){transform:translate(-8px,0)}
+.shortcut-slots span:nth-child(2){transform:translate(6px,16px)}
+.shortcut-slots span:nth-child(3){transform:translate(-5px,2px)}
+.shortcut-slots span:nth-child(4){transform:translate(7px,15px)}
+.shortcut-slots span:nth-child(5){transform:translate(8px,0)}
+.shortcut-slots span:nth-child(6){transform:translate(-6px,16px)}
+.shortcut-slots span:nth-child(7){transform:translate(5px,2px)}
+.shortcut-slots span:nth-child(8){transform:translate(-7px,15px)}
+@media(max-width:560px){.arched-title .feature-subtitle{font-size:29px}.shortcut-slots{row-gap:16px;margin-top:-5px}.shortcut-slots span:nth-child(1){transform:translate(-3px,0)}.shortcut-slots span:nth-child(2){transform:translate(3px,7px)}.shortcut-slots span:nth-child(3){transform:translate(-3px,1px)}.shortcut-slots span:nth-child(4){transform:translate(3px,6px)}.shortcut-slots span:nth-child(5){transform:translate(3px,0)}.shortcut-slots span:nth-child(6){transform:translate(-3px,7px)}.shortcut-slots span:nth-child(7){transform:translate(3px,1px)}.shortcut-slots span:nth-child(8){transform:translate(-3px,6px)}}
+</style><style>
+/* Let the feature bubble rise into the title band while preserving the page flow. */
+.feature-stage{overflow:visible;position:relative;z-index:2}
+.feature-bubble{top:-129px}
+.character-placeholder{margin-top:-135px}
+@media(max-width:800px){.feature-bubble{top:-104px}.character-placeholder{margin-top:-110px}}
+@media(max-width:560px){.feature-bubble{top:-66px}.character-placeholder{margin-top:-72px}.feature-stage{padding-top:48px}}
+.feature-stage{min-height:390px}
+@media(max-width:560px){.feature-stage{min-height:350px}}
+.feature-stage>.edit-banner{display:grid;place-items:center;width:36px;height:36px;padding:0;border:0;background:transparent;color:#fff;font-size:26px;line-height:1;box-shadow:none;opacity:.5;cursor:pointer}
+.feature-stage>.edit-banner:hover,.feature-stage>.edit-banner:focus-visible{opacity:.85;background:transparent;box-shadow:none}
+.shortcut-slots .shortcut-slot{position:relative;display:block;overflow:visible}
+.shortcut-slot .slot-add,.shortcut-slot .slot-open{display:grid;place-items:center;width:100%;height:100%;padding:4px;border:0;border-radius:12px;background:transparent;color:#a6bb9a;text-decoration:none}
+.shortcut-slot .slot-add{font-size:24px;line-height:1;opacity:.55}
+.shortcut-slot .slot-add:hover,.shortcut-slot .slot-add:focus-visible{opacity:1}
+.shortcut-slot.filled{border-color:transparent;background:transparent}
+.shortcut-slot .slot-open img{display:block;max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain}
+.shortcut-slot .slot-edit{position:absolute;z-index:2;right:-10px;top:-10px;display:grid;place-items:center;width:21px;height:21px;padding:0;border:1px solid #b6cba4;border-radius:50%;background:#fffbe9;color:#699363;font-size:13px;line-height:1;opacity:.7}
+.shortcut-slot .slot-edit:hover,.shortcut-slot .slot-edit:focus-visible{opacity:1}
+@media(max-width:560px){.shortcut-slot .slot-add,.shortcut-slot .slot-open{padding:2px;border-radius:8px}.shortcut-slot .slot-edit{right:-9px;top:-9px;width:19px;height:19px}}
+.mast{min-height:96px;align-items:flex-start;padding-top:17px}.live-clock{position:relative;z-index:3;color:#344737;font-family:Sunshiney,cursive;font-size:22px;line-height:1.25}@media(max-width:560px){.mast{min-height:87px;padding:14px 17px}.live-clock{font-size:17px}}
+.side .card-head{background:radial-gradient(circle,#c8dda8 1px,transparent 1.3px) 0 0/13px 13px,#e9f4d0}
+*{cursor:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAfCAYAAAD9cg1AAAAACXBIWXMAAAWJAAAFiQFtaJ36AAADU0lEQVRIia2WUWwURRjHf3vXo9BCWl5ICTRN9PbBBxRFiN4Go/EVYwzyAOHBB8CHPnj7UGwgBAQSMYFsYuoDETVKoiYYQUg8CiFcGjeGEIXCxUpW4LQEaPXolTvK3e7Njg93u1z3zgrt/pNNZr5vZn7zzXyzM4qUEl3VVgApYBlVFYGjwA7DMvPMQUoynugBbgJKE78EnjIsMztbQAS4CCirN2/g4LWfMCyTAyNDvPbeNmrQL2c7OADJeEIm4wlZcoQM6l6+KA/37hRSSmb7tXig1pZIA3xxRzvbBvZHJm2RHTQ+/eznI0c3AnFgAlhjWOafj7NE/6uOedGe9X3v7n3nq0+e6VjaFQOWAFld1U6FAgCIRhSee3klu9Lfse6D7Z55na5qrq5qA3MG1INe3/QmB0aGWL15A1QToVdXNVtXtbeD7ZVkPCEBDMt8UhYAE5MPOLbzQ0YGz3umKWC9YZmnZxVBULVEQD97jOXPPwvQBqR0VRuFECKol3AlmQvDHH9/H5N37gJcmHME9fISoe/Mt55pjQ+whQwN1D4/5hUVH1B2wwOMT1X8cssM7Z5IBcclXxbky2LaaoQCyJUE2ft2U18om5wrVf7LJUMBRJXpV0n2zDmfHcoSdS+McTNjcT01yK0hk2L1DABsDQUwL6rw1/ET/P7Dj55pDOg3LPNEaFnUs/YlrlYBHxmW2e/ZZwSMFh0AWiMKS9pmnstD19+H2/V2v5cIHLTsfZtcSfj1BbEIi2LNcyJXEjiOn0m/1Pv8HnceVBBSIqRsGBzget7mYcVtGLzguIwWHNyK45lWBSOQgDJVcbn8d6npDAGElPx2r0xna5S22v1dcAQFuwr9JzPiNb3SFCBdiRKZns+XDn+OKJfp6F6O+tYbAP7vIKgbqbMAGJaZDgJKQNvU+BjtXV2+4+Khj7n2/Um/3vXiCyzqXkYzjQ9fxS4WAXJBXwT4AiDdvxtRthFlu37wu8AOgNSW3voD5GvCukF6+y6vuiXoV5LxRCeQ4dG71FMGWGtYZl5Xta+BjQDdr2gsVp8GYOzXYcYuDXvtvzEsc1MDoPb47QSOUH1U/QEMBNdSV7U9QB/VO7deReCQYZl7GsLzAI+r2kRWAq/WTJeB9Ewv8H8BP4iWOx6aSYUAAAAASUVORK5CYII=') 0 0,auto!important}
+
+#bookmarks .category-title{display:block;margin:0;padding:5px 8px;border:0;border-radius:5px;background:radial-gradient(circle,#c8dda8 1px,transparent 1.3px) 0 0/13px 13px,#e9f4d0;font-size:12px}
+#bookmarks .bookmark-grid{display:flex;flex-direction:column;gap:0}
+#bookmarks .bookmark{min-height:32px;padding:3px 8px;gap:4px;border:0;border-bottom:1px solid #e1e8d4;border-radius:0;background:transparent}
+#bookmarks .bookmark:hover{background:#f1f7e6;transform:none}
+#bookmarks .bookmark-main{gap:0;min-height:26px}
+#bookmarks .bookmark-main>span{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+#bookmarks .bookmark strong{font-size:13px;flex:1;font-weight:400}
+#bookmarks .bookmark small{margin:0;font-size:11px;max-width:42%;text-align:right}
+#bookmarks .bookmark .remove{position:static;flex:none;padding:2px 4px;font-size:16px}
+#bookmarks .bookmark .edit-link{font-size:13px}
+@media(max-width:560px){#bookmarks .bookmark small{max-width:36%;font-size:10px}#bookmarks .bookmark-main>span{gap:6px}}
+.feature-editing .bubble-heading{outline:1px dashed #b3ca8d;outline-offset:4px;border-radius:10px}.feature-editing>.edit-banner{opacity:1}.feature-editing .shortcut-slot.filled{border-color:#c8d8b0;border-style:dashed}
+@keyframes shortcut-hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.shortcut-slot .slot-open:hover img{animation:shortcut-hop .65s ease-in-out infinite}}
+.shortcut-slot .notification-badge{position:absolute;z-index:3;top:-8px;right:-8px;min-width:18px;height:18px;padding:0 4px;border-radius:20px;background:#cf685f;color:#fff;font:600 10px/18px Verdana,sans-serif;text-align:center;box-shadow:0 0 0 2px #fffbe9;pointer-events:none}.feature-editing .notification-badge{display:none}
+</style><style>.profile-picker{display:flex;align-items:center;gap:9px;color:#48693f;font-size:12px;letter-spacing:0;font-weight:400;position:relative;z-index:4}.profile-switch{width:64px;height:33px;border:1.5px solid #719a50;border-radius:22px;background:#acd287;padding:3px;box-shadow:2px 2px 0 #d2e4b7;position:relative;flex:none}.profile-switch>span{display:block;width:25px;height:25px;border-radius:50%;background:#fffef7;box-shadow:0 1px 3px #34473733;transition:transform .2s}.profile-switch[aria-checked=true]>span{transform:translateX(30px)}.profile-switch:disabled{opacity:.6}.passport-info{min-height:116px}.github-storage{max-width:1080px;margin:0 auto 30px;padding:16px;border:1px solid #9ab873;border-radius:12px;background:#fffef7;font-size:13px}.github-storage summary{cursor:pointer}#profileStatus{margin-top:8px;color:#506b40;font-size:12px}.profile-picker>span{background:none!important;border:0!important;padding:0!important;border-radius:0!important}
+@media(max-width:560px){.profile-picker{gap:6px;font-size:11px}.profile-switch{width:58px;height:31px}.profile-switch>span{width:23px;height:23px}.profile-switch[aria-checked=true]>span{transform:translateX(26px)}.github-storage{margin:0 10px 20px}.topline{gap:8px}.topline .tiny{letter-spacing:.08em}}
+@media(prefers-reduced-motion:reduce){.profile-switch>span{transition:none}}
+
+.profile-switch>span{border:0!important;padding:0!important;border-radius:50%!important;background:#fffef7!important}
+</style><style>.profile-switch{width:46px;height:26px;padding:3px}.profile-switch>span{width:18px;height:18px}.profile-switch[aria-checked=true]>span{transform:translateX(20px)}</style><style>
+#inventory{--kit-ink:#48693f;--kit-line:#9ab873;--kit-paper:#fffef7;--kit-tint:#e5efd6}.kit-head,.kit-nav,.kit-tools,.kit-view-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.kit-head{justify-content:space-between;margin-bottom:16px}.kit-head h2{font-family:'Sunshiney',cursive;font-size:30px;margin:0}.kit-pencil{background:none;border:0;font-size:24px;opacity:.5;color:var(--kit-ink);padding:4px 8px}.kit-pencil[aria-pressed=true]{opacity:1}.kit-nav{justify-content:space-between;background:var(--kit-tint);border:1px solid var(--kit-line);border-radius:12px;padding:10px}.kit-nav select{min-width:120px;max-width:70%;font-size:16px;background:var(--kit-paper);color:var(--kit-ink);border:0;border-radius:6px;padding:5px}.kit-nav button{background:var(--kit-paper);border:1px solid var(--kit-line);border-radius:8px;padding:6px 10px;color:var(--kit-ink);font-size:14px}.kit-nav button img{width:30px;height:24px;object-fit:contain}.kit-tools{padding:12px 0;font-size:14px}.kit-tools button,.kit-view-head button{font-size:14px}.kit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:14px;padding:18px 2px}.kit-cell{position:relative;min-width:0}.kit-slot{display:flex;align-items:center;justify-content:center;flex-direction:column;width:100%;aspect-ratio:1;border:1.5px solid var(--kit-line);border-radius:14px;background:var(--kit-paper);color:var(--kit-ink);background-size:100% 100%;background-repeat:no-repeat;padding:10px;transition:transform .18s;position:relative}.kit-slot:hover{transform:translateY(-3px)}.kit-slot.selected{background-color:var(--kit-tint);outline:2px solid var(--kit-ink);outline-offset:2px}.kit-slot.has-art{border:0;background-color:transparent}.kit-slot img{max-width:60%;height:45%;object-fit:contain}.kit-ext{font-weight:bold;font-size:16px}.kit-name{display:block;text-align:center;font-size:13px;margin-top:7px;overflow-wrap:anywhere;line-height:1.3}.kit-check{position:absolute;right:4px;top:4px;z-index:1;width:24px;height:24px;border:1.5px solid var(--kit-line);border-radius:5px;background:var(--kit-paper);background-size:contain;background-position:center;background-repeat:no-repeat;padding:0;color:var(--kit-ink);font-size:18px}.kit-check.has-art{border:0;background-color:transparent}.kit-empty{opacity:.45;border-style:dashed}.kit-msg{font-size:14px;min-height:20px;color:var(--kit-ink)}.kit-assets{margin:8px 0;padding:12px;border:1px solid var(--kit-line);border-radius:10px;background:var(--kit-paper)}.kit-assets label{display:block;font-size:14px;margin:10px 0}.kit-assets input{display:block;width:100%;margin-top:4px;padding:6px}.kit-modal{width:min(720px,94vw);max-height:90vh;border:1px solid #9ab873;border-radius:16px;padding:18px;background:#fffef7;color:#304b78}.kit-modal::backdrop{background:#304b7855}.kit-view-head{justify-content:space-between;margin-bottom:12px}.kit-view-head strong{overflow-wrap:anywhere;max-width:100%}.kit-text{white-space:pre-wrap;overflow-wrap:anywhere;font:16px/1.65 system-ui;max-height:55vh;min-height:180px;overflow:auto;padding:24px;margin:0;background:#fff;background-size:100% 100%;border-radius:10px;color:#304b78;user-select:text}.kit-preview{display:block;max-width:100%;max-height:50vh;margin:auto}.kit-form label{display:block;margin:14px 0}.kit-form input{display:block;width:100%;padding:8px;margin-top:6px}.kit-form .actions{margin-top:16px}.inventory-card{padding:16px;background:var(--kit-paper);border:1.5px solid var(--kit-line);border-radius:14px}.inventory-card .kit-head{justify-content:flex-end;margin-bottom:0}.inventory-card .kit-nav{background:none;border:0;padding:0 0 10px;border-radius:0}.inventory-card .kit-nav button{border:0;background:none;box-shadow:none;padding:6px 10px;min-width:44px;min-height:44px}.inventory-card .kit-nav button img{height:32px;width:auto;max-width:24px;object-fit:contain}.inventory-card .kit-nav button:disabled{opacity:.3}.inventory-card .kit-grid{padding-top:12px}.inventory-card .kit-nav{flex-wrap:nowrap;gap:8px;justify-content:space-between}.kit-section-title{display:flex;justify-content:center;align-items:center;gap:5px;flex:1;min-width:0}.kit-section-title>span{font:400 24px/1.2 'Sunshiney',cursive;overflow-wrap:anywhere;color:var(--kit-ink)}.inventory-card .kit-section-title .kit-pencil{border:0;background:none;min-width:32px;min-height:36px;padding:4px;flex:none;opacity:.5}.inventory-card .kit-section-title .kit-pencil[aria-pressed=true]{opacity:1}.inventory-card .kit-nav>button{flex:none}.inventory-card{padding:12px 18px 16px;border-radius:16px;box-shadow:3px 3px 0 #d2e4b7}.inventory-card .kit-nav{padding:0 0 12px;min-height:48px}.kit-section-title>span{font:400 18px/1.3 system-ui}.inventory-card .kit-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;padding:8px 0 0}.inventory-card .kit-slot{border-radius:15px}.inventory-card .kit-msg:empty{min-height:0}.inventory-card .kit-nav>button{padding:4px 8px}.inventory-card .kit-nav>button img{height:32px;width:auto}.inventory-card .kit-pencil{font-size:22px}
+@media(max-width:850px){.inventory-card .kit-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:560px){.inventory-card{padding:10px 12px 14px}.inventory-card .kit-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}.inventory-card .kit-slot{border:0;border-radius:18%;background-color:transparent;background-image:url('https://raw.githubusercontent.com/aleciarf/homepage/main/ItemSlot1.png'),url('data:image/png;base64,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');background-size:100% 100%;color:#fff0cd}.inventory-card .kit-slot.kit-empty{opacity:1}.inventory-card .kit-slot.selected{outline:2px solid #edc392;outline-offset:2px}.inventory-card .kit-slot.has-art{background-color:transparent}
+
+#kitAddDialog{width:min(440px,calc(100% - 30px));padding:0;border:2px solid #709b51;border-radius:15px;background:#fff;color:#344737;box-shadow:9px 9px 0 #cfe4b6;overflow:auto}#kitAddDialog::backdrop{background:#253c2b85}#kitAddDialog .card-head{padding:10px 14px;background:#e9f4d0;border-bottom:1px solid #b3ca8d;font-size:14px}#kitAddDialog .kit-form{padding:17px}#kitAddDialog .kit-form label{margin:0 0 10px;color:#557646;font-weight:bold}#kitAddDialog .kit-form input{border:1px solid #a7c982;border-radius:8px;background:#fff;color:#344737;padding:12px 10px;margin-top:8px}#kitAddDialog .kit-form p{font-size:13px;line-height:1.8;margin:8px 0 12px}#kitAddDialog .actions{margin-top:16px}#kitAddDialog #kitCloseAdd{border:2px solid #78b955;border-radius:0;font-size:24px;line-height:1;padding:6px 8px;color:#8b977f}#kitAddDialog #kitAddStatus:empty{display:none}
+
+</style><style>.tabs .tab{font-family:'Sunshiney',cursive;font-size:20px;font-weight:400;font-style:normal;line-height:1.2}</style><style id="folder-tab-style">
+.tabs{background:linear-gradient(to bottom,rgba(255,255,255,.5) 0%,rgba(255,255,255,.5) 10%,rgba(200,223,171,.5) 90%,rgba(200,223,171,.5) 100%);border:0;border-radius:14px 14px 0 0;padding:12px 12px 0;gap:6px;margin-bottom:0;box-shadow:none}
+.tabs .tab{background:#e5efd6;color:#48693f;border:0;border-radius:12px 12px 0 0;padding:11px 18px;box-shadow:none;position:relative;font-family:'Sunshiney',cursive;font-size:20px;font-weight:400;font-style:normal;line-height:1.2}
+.tabs .tab.active{background:#fff;color:#345e32;border:0;box-shadow:none}
+.tabs .tab::before,.tabs .tab::after{display:none}
+.content>.panel{padding-top:16px}
+@media(max-width:560px){.tabs{padding:9px 9px 0;gap:5px}.tabs .tab{padding:10px 12px;flex:1;text-align:center}}
+</style><style>#bookmarks>.section-head,#notes>.section-head{justify-content:flex-end}</style><style id="inventory-reference-layout">
+.tabs{padding:0 10px;gap:5px;align-items:flex-end;min-height:52px;border-radius:0;margin-bottom:0}
+.tabs .tab{padding:10px 16px;border-radius:10px 10px 0 0;min-height:40px;flex:none}
+.tabs .tab.active{min-height:44px;border:1px solid #9ab873;border-bottom:0;background:#fffef7}
+.content>#inventory.panel{padding-top:0}
+@media(max-width:560px){.tabs{padding:0 8px;min-height:48px;gap:4px}.tabs .tab{font-size:19px;padding:9px 12px;flex:none}}
+</style><style id="consistent-tabs">
+.tabs .tab,.tabs .tab.active{box-sizing:border-box;width:116px;min-height:44px;height:44px;padding:10px 12px;border:0;border-radius:10px 10px 0 0;font-family:'Sunshiney',cursive;font-size:20px;font-weight:400;font-style:normal;line-height:1.2;text-align:center;box-shadow:none;transform:none;flex:0 0 116px}
+@media(max-width:560px){.tabs .tab,.tabs .tab.active{width:auto;flex:1 1 0;min-width:0;padding:10px 8px;font-size:19px}}
+</style><style id="tab-outer-outline">
+.tabs{background:none;background-image:none;gap:9px;padding-bottom:2px}.tabs .tab,.tabs .tab.active{outline:1.5px solid #91ad70;outline-offset:0;border:0;box-shadow:none}.tabs .tab:focus-visible{outline:3px solid #48693f;outline-offset:2px}
+</style><style>
+#inventory{--kit-paper:#fffbe9}
+#bookmarks>.section-head .mini-btn{font-size:12px;padding:5px 9px;min-height:26px;border-radius:7px}
+.note-composer{background:#fffbe9;border:1px solid #9ab873;border-radius:12px;padding:16px;margin-bottom:18px}.note-composer>label{display:block;font:400 24px/1.2 'Sunshiney',cursive;margin-bottom:10px}.note-composer textarea{width:100%;box-sizing:border-box;resize:vertical;font:400 16px/1.5 system-ui;color:#345e32;background:#fffef7;border:1px solid #bdcea2;border-radius:8px;padding:10px}.note-compose-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;flex-wrap:wrap}.note-compose-actions label{display:flex;align-items:center;gap:8px;font-size:14px}.note-compose-actions input{font:400 14px system-ui;border:1px solid #bdcea2;border-radius:6px;padding:5px;color:#345e32;background:#fffef7}#noteComposeStatus{font-size:13px;margin:8px 0 0}#noteComposeStatus:empty{display:none}
+</style><style id="ticket-label-tabs">
+.tabs{background:none;gap:10px;min-height:0;padding:0;margin-bottom:14px;align-items:stretch}.tabs .tab,.tabs .tab.active{height:auto;min-height:44px;width:auto;flex:1;padding:11px 10px;border:1px dashed #8cae67;border-radius:2px;outline:none;box-shadow:none;transform:none;font:400 22px/1.2 'Sunshiney',cursive;background:#eff6e5;color:#365c38}
+.tabs .tab.active{background:#d8e9b9;border-style:solid}.tabs .tab:focus-visible{outline:2px solid #48693f;outline-offset:3px}
+@media(max-width:560px){.tabs{gap:8px}.tabs .tab,.tabs .tab.active{font-size:19px;padding:10px 7px}}
+</style><style id="compact-ticket-tabs">
+.tabs{gap:7px;margin-bottom:10px;justify-content:flex-start}.tabs .tab,.tabs .tab.active{font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:400;font-style:normal;line-height:1.2;padding:7px 12px;min-height:32px;height:auto;width:auto;flex:0 0 auto}
+@media(max-width:560px){.tabs .tab,.tabs .tab.active{font-size:14px;padding:7px 10px;min-height:32px;flex:0 0 auto}}
+</style><style id="normal-text-font">
+@font-face{font-family:'Homepage Seurat';src:url('https://raw.githubusercontent.com/aleciarf/homepage/main/asset/FOT-Seurat%20Pro%20B.otf') format('opentype'),url('https://clover-desk-phuong-2026.gracegrace1509.chatgpt.site/asset/fot-seurat-pro-b.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}body,button,input,textarea,select,.tabs .tab,.tabs .tab.active,.kit-section-title>span,.kit-text,.kit-form p,.kit-name,.kit-ext,.post-body,.post-name,.post-foot,.date,.bookmark,.bookmark small,.profile p,.live-clock,.note-composer textarea,.note-compose-actions input,.note-compose-actions label{font-family:'Homepage Seurat',Arial,Helvetica,sans-serif!important}
+</style><style id="profile-two-green-background">
+html.profile-night{background:#91ad96}
+html.profile-night body{background:radial-gradient(circle,#b6cfaa 1.5px,transparent 1.5px) 0 0/24px 24px,#91ad96}
+.profile-night .topline .tiny,.profile-night .footer{color:#354e3a}
+</style><style>.utility-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px}.utility-slot{display:grid;place-items:center;aspect-ratio:1;border:0;border-radius:10px;background:transparent;min-width:0;padding:8px;color:#9ab873;text-decoration:none;transition:transform .18s}.utility-slot:hover{transform:translateY(-3px)}.utility-slot img{width:100%;height:100%;max-height:56px;object-fit:contain}.utility-empty{border:1px dashed #bed2a0;background:#fbfcf2;font-size:22px}.utility-icon-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-height:280px;overflow:auto;padding:4px}.utility-icon-choice{border:1px solid #bed2a0;border-radius:8px;aspect-ratio:1;background:#fff;padding:10px;min-width:0}.utility-icon-choice img{width:100%;height:100%;object-fit:contain}.utility-icon-choice.selected{outline:2px solid #78ba66;background:#e9f4d0}#utilityStatus{font-size:13px;margin:0}#utilityEdit{opacity:.5}</style><style>
+.utility-slots{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:10px 16px;justify-items:center}.utility-slot{width:50%;padding:4px;position:relative;border-radius:5px;font-size:11px}.utility-slot img{max-height:28px}.utility-slot:hover{transform:translateY(-1px)}.utility-slot .utility-hover{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);opacity:0;pointer-events:none}.utility-slot.has-pressed:is(:hover,:focus-visible,:active)>img:not(.utility-hover){opacity:0}.utility-slot.has-pressed:is(:hover,:focus-visible,:active)>.utility-hover{opacity:1}
+button.ui-art-button.ui-art-ready, #kitAddDialog button.ui-art-button.ui-art-ready{background:transparent;border:0;box-shadow:none;padding:3px;min-width:32px;min-height:32px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center}button.ui-art-button>img{display:none;height:32px;width:auto;max-width:100%;object-fit:contain}button.ui-art-ready>img{display:block}button.ui-art-ready>.ui-art-fallback{display:none}button.ui-art-ready:hover{filter:brightness(1.06)}button.ui-art-ready:active{transform:translateY(1px)}button.ui-art-ready:disabled{opacity:.45}
+.github-storage{max-width:1080px;margin:0 auto 22px;padding:0 22px;border:0;border-radius:0;background:transparent;font-size:11px}.github-storage summary{width:max-content;color:#506b40;font-size:11px;opacity:.65}.github-storage summary:hover,.github-storage summary:focus-visible{opacity:1}.github-storage details[open]{max-width:460px;margin-left:auto;padding:12px;background:#fffef7;border:1px solid #c7d7b6;border-radius:10px}.github-storage details:not([open])>summary{margin-left:auto}.github-storage details[open]>summary{opacity:1}#profileStatus{font-size:11px;line-height:1.5}.github-storage .action{font-size:11px;padding:6px 9px}
+
+</style></head><body><div class="shell"><div class="topline"><span class="tiny">Homepage</span><div class="profile-picker"><button id="profileSwitch" class="profile-switch" type="button" role="switch" aria-checked="false" aria-label="Switch to profile 2"><span></span></button></div></div><div class="site"><header class="mast"><time id="liveClock" class="live-clock" aria-label="Current date and time"></time></header><section class="feature-stage" id="banner"><div class="feature-bubble"><svg class="blob-shape" viewBox="0 0 780 330" preserveAspectRatio="none" aria-hidden="true"><path d="M 91 48 C 184 12 299 15 392 18 C 505 20 622 12 696 47 C 755 75 774 119 757 179 C 742 252 686 290 592 284 C 506 278 434 272 347 284 C 250 298 165 295 95 273 C 30 250 13 186 24 135 C 33 94 49 64 91 48 Z"/></svg><div class="bubble-heading"><h2 class="arched-title"><svg viewBox="0 0 780 160" role="img" aria-label="Feature title" preserveAspectRatio="xMidYMid meet"><defs><path id="featureTitleCurve" d="M 55 108 Q 390 48 725 108"/><path id="featureSubtitleCurve" d="M 55 139 Q 390 79 725 139"/></defs><text><textPath id="bannerTitle" href="#featureTitleCurve" startOffset="50%" text-anchor="middle">A little space for something special</textPath></text><text class="feature-subtitle"><textPath id="bannerSub" href="#featureSubtitleCurve" startOffset="50%" text-anchor="middle">Your shortcuts will live here.</textPath></text></svg></h2></div><div class="shortcut-slots" aria-label="App and website shortcuts"></div></div><button class="mini-btn edit-banner" data-edit="banner" aria-label="Edit feature area" title="Edit feature area">✎</button><div class="character-placeholder"><div class="character-frame"><span>✦</span><strong>Character placeholder</strong><small>your character can go here later</small></div></div></section><div class="layout"><aside class="side"><section class="card"><div class="card-head">PASSPORT &nbsp; ✿ about me <button class="remove" data-edit="profile" aria-label="Edit profile">✎</button></div><div class="profile"><div class="passport-photo"><div class="avatar" id="avatar">☘</div></div><div class="passport-info"><span class="passport-line">Always be kind ♡</span><h2 id="profileName">Your name</h2><p id="profileBio">A little introduction goes here. Make this space yours!</p></div></div></section><section class="card"><div class="card-head"><span>Utilities</span><button id="utilityEdit" class="remove" aria-label="Edit utilities" aria-pressed="false">✎</button></div><div id="utilitySlots" class="utility-slots"></div></section></aside><main class="content"><nav class="tabs" aria-label="Sections"><button class="tab active" data-tab="bookmarks" aria-selected="true">Bookmarks</button><button class="tab" data-tab="notes" aria-selected="false">Notes</button><button class="tab" data-tab="inventory" aria-selected="false">Inventory</button></nav><section class="panel active" id="bookmarks"><div class="section-head"><button class="mini-btn" data-edit="bookmark">＋ Add link</button></div><div id="bookmarkList"></div></section><section class="panel" id="notes"><form id="noteComposer" class="note-composer"><label for="noteText">New post</label><textarea id="noteText" name="text" rows="3" maxlength="1000" placeholder="Write a little note…" required></textarea><div class="note-compose-actions"><label for="noteDate">Date <input id="noteDate" name="date" type="date" required></label><button type="submit" class="mini-btn">Post</button></div><p id="noteComposeStatus" role="status" aria-live="polite"></p></form><div id="postList"></div></section><section class="panel" id="inventory"><div id="kitRoot"></div></section></main></div></div><p class="footer">made with <span>♡</span> and a little bit of clover</p></div><dialog id="editor"><div class="card-head"><span id="dialogTitle">Edit</span><button class="remove" id="closeDialog" aria-label="Close">×</button></div><form class="dialog-body form" id="editForm"><div id="fields"></div><div class="actions"><button type="button" class="action" id="cancelDialog">Cancel</button><button class="action primary" type="submit">Save</button></div></form></dialog><script>
+function updateClock(){let now=new Date();$('#liveClock').textContent=new Intl.DateTimeFormat(undefined,{weekday:'long',month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(now);$('#liveClock').dateTime=now.toISOString()}
+let notificationCounts={};let featureEditing=false;const initial={bannerTitle:'A little space for something special',bannerSub:'Your future feature belongs here.',bannerImage:'',name:'Your name',bio:'A little introduction goes here. Make this space yours!',avatar:'',shortcuts:Array(8).fill(null),bookmarks:[{id:1,title:'Music',url:'https://open.spotify.com',appUrl:'spotify:',category:'Everyday',icon:'♫'},{id:2,title:'Inspiration',url:'https://www.pinterest.com',category:'Everyday',icon:'✿'},{id:3,title:'Videos',url:'https://www.youtube.com',category:'Everyday',icon:'▶'},{id:4,title:'Mail',url:'https://mail.google.com',category:'Useful',icon:'✉'},{id:5,title:'Maps',url:'https://maps.google.com',category:'Useful',icon:'⌖'}],posts:[{id:1,text:'Welcome to my little corner of the internet! ☘',date:'Sep 29, 2026'}]};const profileDefaults=[structuredClone(initial),{...structuredClone(initial),bookmarks:[],posts:[]}];
+let activeProfile=Number(localStorage.getItem('homepage-active-profile')||0)===1?1:0;
+const profileStates=profileDefaults.map((fallback,i)=>{try{const cached=JSON.parse(localStorage.getItem('homepage-profile-'+i)||'null');if(cached?.data)return {...cached,data:{...structuredClone(fallback),...cached.data},revision:0}}catch{}if(i===0){try{const legacy=JSON.parse(localStorage.getItem('clover-desk-v1')||'null');if(legacy)return {data:{...structuredClone(fallback),...legacy},dirty:true,sha:null,revision:0}}catch{}}return {data:structuredClone(fallback),dirty:false,sha:null,revision:0}});
+let data=profileStates[activeProfile].data;
+function cacheProfile(i){try{localStorage.setItem('homepage-profile-'+i,JSON.stringify(profileStates[i]))}catch{alert('This browser could not save the image. Try a smaller one.')}}
+function mediaUrl(value){if(!value)return '';return value.startsWith('assets/')?'https://raw.githubusercontent.com/aleciarf/homepage/main/'+value:value}
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const save=()=>{const state=profileStates[activeProfile];state.data=data;state.dirty=true;state.revision++;cacheProfile(activeProfile);if(typeof storageStatus==='function')storageStatus('Unsaved changes · Profile '+(activeProfile+1))};function render(){if(!['bookmarks','notes','inventory'].includes(data.activeTab))data.activeTab='bookmarks';document.documentElement.classList.toggle('profile-night',activeProfile===1);$('#profileSwitch').setAttribute('aria-checked',String(activeProfile===1));$('#profileSwitch').setAttribute('aria-label','Switch to profile '+(activeProfile===1?1:2));document.querySelectorAll('.tab').forEach(x=>{x.classList.toggle('active',x.dataset.tab===(data.activeTab||'bookmarks'));x.setAttribute('aria-selected',String(x.dataset.tab===(data.activeTab||'bookmarks')))});document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===(data.activeTab||'bookmarks'))); $('#bannerTitle').textContent=data.bannerTitle;$('#bannerTitle').style.fontSize=(innerWidth<560?(data.bannerTitle.length>55?'29px':data.bannerTitle.length>40?'38px':'46px'):(data.bannerTitle.length>55?'24px':data.bannerTitle.length>40?'29px':'34px'));$('#bannerSub').textContent=data.bannerSub;$('#banner').classList.toggle('has-image',!!data.bannerImage);$('#banner').style.backgroundImage=data.bannerImage?`url(${JSON.stringify(mediaUrl(data.bannerImage))})`:'';renderShortcuts();$('#profileName').textContent=data.name;$('#profileBio').textContent=data.bio;$('#avatar').innerHTML=data.avatar?`<img src="${esc(mediaUrl(data.avatar))}" alt="Profile picture" style="width:100%;height:100%;object-fit:cover">`:'☘';let groups=[...new Set(data.bookmarks.map(x=>x.category||'Other'))];$('#bookmarkList').innerHTML=groups.length?groups.map(g=>`<section class="category"><h3 class="category-title">${esc(g)}</h3><div class="bookmark-grid">${data.bookmarks.filter(x=>(x.category||'Other')===g).map(x=>`<div class="bookmark"><a class="bookmark-main" href="${esc(x.appUrl||(/^https:\/\/open\.spotify\.com/.test(x.url)?'spotify:':x.url))}" ${(x.appUrl||/^https:\/\/open\.spotify\.com/.test(x.url))?'':'target="_blank" rel="noopener noreferrer"'} title="${(x.appUrl||/^https:\/\/open\.spotify\.com/.test(x.url))?'Open app':'Open website'}"><span><strong>${esc(x.title)}</strong><small>${(x.appUrl||/^https:\/\/open\.spotify\.com/.test(x.url))?'<span class="app-badge">↗ Open app</span>':esc(new URL(x.url).hostname)}</small></span></a><button class="remove edit-link" data-edit-bookmark="${x.id}" aria-label="Edit ${esc(x.title)}">✎</button><button class="remove" data-delete-bookmark="${x.id}" aria-label="Remove ${esc(x.title)}">×</button></div>`).join('')}</div></section>`).join(''):'<div class="empty">No links yet. Add your first favorite place ♡</div>';$('#postList').innerHTML=data.posts.length?[...data.posts].reverse().map(x=>`<article class="post"><div class="post-top"><div class="post-avatar">${data.avatar?`<img src="${esc(mediaUrl(data.avatar))}" alt="">`:'☘'}</div><div><div class="post-name">${esc(data.name)}</div><div class="date">${esc(x.date)}</div></div></div><div class="post-body">${esc(x.text)}</div><div class="post-foot"><span>♡ a little thought</span><button class="remove" data-delete-note="${x.id}" aria-label="Delete post">×</button></div></article>`).join(''):'<div class="empty">No posts yet. Write your first little note ♡</div>'}function shortcutBadgeSource(x){if(x?.badgeSource==='none')return null;if(['facebook','messenger','gmail','chat'].includes(x?.badgeSource))return x.badgeSource;try{let u=new URL(x?.link),h=u.hostname;if(h==='messenger.com'||h==='www.messenger.com'||(h==='www.facebook.com'&&u.pathname.startsWith('/messages')))return 'messenger';if(h==='www.facebook.com'||h==='facebook.com')return 'facebook';if(h==='mail.google.com')return 'gmail';if(h==='chat.google.com')return 'chat'}catch{}return null}
+function updateNotificationBadges(){document.querySelectorAll('.notification-badge').forEach(x=>x.remove());document.querySelectorAll('.shortcut-slot').forEach((slot,i)=>{let x=(data.shortcuts||[])[i],source=shortcutBadgeSource(x),reading=notificationCounts[source],link=slot.querySelector('.slot-open');if(!link)return;link.setAttribute('aria-label',(featureEditing?'Edit':'Open')+' shortcut '+(i+1));if(!reading||!Number.isInteger(reading.count)||reading.count<=0||Date.now()-reading.updatedAt>300000)return;let badge=document.createElement('b');badge.className='notification-badge';badge.textContent=reading.count>99?'99+':String(reading.count)+(reading.approximate?'+':'');badge.title=reading.count+(reading.approximate?'+':'')+' unread · '+new Date(reading.updatedAt).toLocaleTimeString();badge.setAttribute('aria-hidden','true');slot.append(badge);link.setAttribute('aria-label',(featureEditing?'Edit':'Open')+' shortcut '+(i+1)+', '+reading.count+' unread')})}
+window.addEventListener('message',e=>{if(e.source!==window||e.origin!==location.origin||e.data?.type!=='homepage-notification-counts-v1')return;const incoming=e.data.counts;if(!incoming||typeof incoming!=='object')return;const clean={};for(const service of ['facebook','messenger','gmail','chat']){let x=incoming[service];if(x&&Number.isFinite(x.updatedAt)&&x.updatedAt<=Date.now()+60000&&(x.count===null||(Number.isInteger(x.count)&&x.count>=0&&x.count<=99999)))clean[service]={count:x.count,updatedAt:x.updatedAt,approximate:!!x.approximate}}notificationCounts=clean;updateNotificationBadges()});
+setInterval(updateNotificationBadges,30000);
+function renderShortcuts(){let shortcuts=Array.isArray(data.shortcuts)?data.shortcuts:[];$('#banner').classList.toggle('feature-editing',featureEditing);let toggle=$('.edit-banner');toggle.textContent=featureEditing?'✓':'✎';toggle.setAttribute('aria-label',featureEditing?'Finish editing feature area':'Edit feature area');toggle.setAttribute('aria-pressed',String(featureEditing));toggle.title=featureEditing?'Done':'Edit feature area';$('.shortcut-slots').innerHTML=Array.from({length:8},(_,i)=>{let x=shortcuts[i];if(x&&x.icon&&x.link)return `<span class="shortcut-slot filled">${featureEditing?`<button class="slot-open" type="button" data-edit-shortcut="${i}" aria-label="Edit shortcut ${i+1}"><img src="${esc(mediaUrl(x.icon))}" alt=""></button><button class="slot-edit" type="button" data-edit-shortcut="${i}" aria-label="Edit shortcut ${i+1}">✎</button>`:`<a class="slot-open" href="${esc(x.link)}" ${x.type==='url'?'target="_blank" rel="noopener noreferrer"':''} aria-label="Open shortcut ${i+1}"><img src="${esc(mediaUrl(x.icon))}" alt=""></a>`}</span>`;return `<span class="shortcut-slot">${featureEditing?`<button class="slot-add" type="button" data-add-shortcut="${i}" aria-label="Add shortcut ${i+1}">+</button>`:''}</span>`}).join('');updateNotificationBadges()}
+updateClock();setInterval(updateClock,30000);render();document.addEventListener('click',e=>{const tab=e.target.closest('[data-tab]');if(tab){let id=tab.dataset.tab;data.activeTab=id;save();document.querySelectorAll('.tab').forEach(x=>{x.classList.toggle('active',x.dataset.tab===id);x.setAttribute('aria-selected',x.dataset.tab===id)});document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelector('main').scrollIntoView({behavior:'smooth',block:'nearest'})}const shortcut=e.target.closest('[data-add-shortcut],[data-edit-shortcut]');if(shortcut){openEditor('shortcut',Number(shortcut.dataset.addShortcut??shortcut.dataset.editShortcut))}const editB=e.target.closest('[data-edit-bookmark]');if(editB){openEditor('bookmark',Number(editB.dataset.editBookmark))}const delB=e.target.closest('[data-delete-bookmark]');if(delB){e.preventDefault();data.bookmarks=data.bookmarks.filter(x=>x.id!=delB.dataset.deleteBookmark);save();render()}const delN=e.target.closest('[data-delete-note]');if(delN){data.posts=data.posts.filter(x=>x.id!=delN.dataset.deleteNote);save();render()}const edit=e.target.closest('[data-edit]');if(edit){if(edit.dataset.edit==='banner'){featureEditing=!featureEditing;renderShortcuts();if(featureEditing)openEditor('banner')}else openEditor(edit.dataset.edit)}if(featureEditing&&e.target.closest('.bubble-heading'))openEditor('banner')});const dlg=$('#editor'),fields=$('#fields');let kind,editingBookmarkId=null,editingShortcutIndex=null;function input(name,label,value='',type='text',extra=''){return `<label>${label}${type==='textarea'?`<textarea name="${name}" ${extra}>${esc(value)}</textarea>`:`<input name="${name}" type="${type}" value="${esc(value)}" ${extra}>`}</label>`}function openEditor(k,id=null){kind=k;editingBookmarkId=id;editingShortcutIndex=k==='shortcut'?id:null;let title='',html='';if(k==='banner'){title='Feature area';html=input('title','Title',data.bannerTitle,'text','required maxlength="80"')+input('sub','Short line',data.bannerSub,'text','maxlength="120"')+input('image','Landscape image (optional)','','file','accept="image/png,image/jpeg,image/webp,image/gif"')+'<small>Save your text, then edit the shortcuts on the bubble. Click the checkmark when finished.</small>'}if(k==='shortcut'){let x=(data.shortcuts||[])[id]||{};title=x.link?'Edit shortcut':'Add shortcut';html=`<label>Open<select name="linkType"><option value="url" ${x.type!=='app'?'selected':''}>Website URL</option><option value="app" ${x.type==='app'?'selected':''}>Windows app link</option></select></label>`+input('link','URL or app link',x.link||'','text','required placeholder="https://example.com or spotify:"')+`<label>Notification badge<select name="badgeSource">${[['auto','Automatic (from link)'],['none','None'],['facebook','Facebook'],['messenger','Messenger'],['chat','Google Chat'],['gmail','Gmail']].map(([value,label])=>`<option value="${value}" ${(x.badgeSource||'auto')===value?'selected':''}>${label}</option>`).join('')}</select></label><small>Unread counts appear when the Homepage notification badges extension has a fresh reading.</small>`+input('icon','Icon image (PNG recommended)','','file',`${x.icon?'':'required '}accept="image/png,image/webp,image/jpeg,image/gif"`)+`<small>The blob displays only your icon. Windows app links open when the app is installed and the browser allows it.</small>${x.link?'<button type="button" class="action" id="removeShortcut">Remove shortcut</button>':''}`}
+if(k==='profile'){title='Your profile';html=input('name','Name',data.name,'text','required maxlength="50"')+input('bio','About you',data.bio,'textarea','maxlength="240"')+input('avatar','Profile picture (optional)','','file','accept="image/png,image/jpeg,image/webp,image/gif"')}if(k==='bookmark'){let b=data.bookmarks.find(x=>x.id===id)||{};title=id?'Edit bookmark':'Add a bookmark';html=input('title','Name',b.title||'','text','required maxlength="60"')+input('url','Website fallback',b.url||'','url','required placeholder="https://example.com"')+input('appUrl','Windows app link (optional)',b.appUrl||'','text','placeholder="spotify: or ms-settings:"')+'<small>Use an app link supported by the installed program. Your browser may ask before opening it.</small>'+input('category','Category (new or existing)',b.category||'','text','required maxlength="40" list="categories"')+`<datalist id="categories">${[...new Set(data.bookmarks.map(x=>x.category))].map(x=>`<option value="${esc(x)}">`).join('')}</datalist>`+input('icon','Symbol or emoji',b.icon||'☆','text','maxlength="4"')}if(k==='note'){title='New post';html=input('text','What is on your mind?','','textarea','required maxlength="1000"')}$('#dialogTitle').textContent=title;fields.innerHTML=html;dlg.showModal()}function close(){dlg.close();$('#editForm').reset()}$('#closeDialog').onclick=close;$('#cancelDialog').onclick=close;fields.addEventListener('click',e=>{if(e.target.id==='removeShortcut'){data.shortcuts[editingShortcutIndex]=null;save();render();close()}});async function readImage(file){return new Promise((resolve,reject)=>{let r=new FileReader;r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})}async function readShortcutIcon(file){let source=await readImage(file);return new Promise((resolve,reject)=>{let img=new Image();img.onload=()=>{let canvas=document.createElement('canvas'),scale=Math.min(1,128/Math.max(img.naturalWidth,img.naturalHeight));canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/png'))};img.onerror=reject;img.src=source})}
+$('#editForm').onsubmit=async e=>{e.preventDefault();let f=new FormData(e.target);if(kind==='shortcut'){let type=String(f.get('linkType')),link=String(f.get('link')).trim(),file=f.get('icon');if(type==='url'){try{let u=new URL(link);if(!['http:','https:'].includes(u.protocol))throw Error()}catch{alert('Please enter a complete http:// or https:// URL.');return}}else if(type==='app'){if(!/^[a-z][a-z0-9+.-]*:/i.test(link)||/^(https?|javascript|data|file|blob):/i.test(link)){alert('Please enter a Windows app link such as spotify: or ms-settings:.');return}}else return;let icon=(data.shortcuts||[])[editingShortcutIndex]?.icon;if(file?.size){if(file.size>5*1024*1024||!['image/png','image/webp','image/jpeg','image/gif'].includes(file.type)){alert('Choose a PNG, WebP, JPG, or GIF image under 5 MB.');return}try{icon=await readShortcutIcon(file)}catch{alert('Could not read that image. Please try another file.');return}}if(!icon){alert('Please choose an icon image.');return}if(!Array.isArray(data.shortcuts))data.shortcuts=Array(8).fill(null);data.shortcuts[editingShortcutIndex]={type,link,icon,badgeSource:String(f.get('badgeSource')||'auto')};save();render();close();return}
+if(kind==='banner'){data.bannerTitle=String(f.get('title')).trim();data.bannerSub=String(f.get('sub')).trim();let file=f.get('image');if(file?.size)data.bannerImage=await readImage(file)}if(kind==='profile'){data.name=String(f.get('name')).trim();data.bio=String(f.get('bio')).trim();let file=f.get('avatar');if(file?.size)data.avatar=await readImage(file)}if(kind==='bookmark'){let url=String(f.get('url')).trim();if(!/^https?:\/\//i.test(url)){alert('Please use an address beginning with https://');return}let appUrl=String(f.get('appUrl')).trim();if(appUrl&&!/^[a-z][a-z0-9+.-]*:/i.test(appUrl)||/^(javascript|data|file):/i.test(appUrl)){alert('Please enter an app link such as spotify: or leave it blank.');return}let record={id:editingBookmarkId||Date.now(),title:String(f.get('title')).trim(),url,appUrl,category:String(f.get('category')).trim(),icon:String(f.get('icon')).trim()||'☆'};if(editingBookmarkId)data.bookmarks=data.bookmarks.map(x=>x.id===editingBookmarkId?record:x);else data.bookmarks.push(record)}if(kind==='note')data.posts.push({id:Date.now(),text:String(f.get('text')).trim(),date:new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})});save();render();close()};
+if(document.modelContext?.registerTool){const register=tool=>{try{Promise.resolve(document.modelContext.registerTool(tool)).catch(()=>{})}catch{}};register({name:'add_bookmark',title:'Add bookmark',description:'Save a categorized link to this homepage.',inputSchema:{type:'object',properties:{title:{type:'string'},url:{type:'string'},category:{type:'string'},icon:{type:'string'}},required:['title','url','category'],additionalProperties:false},annotations:{readOnlyHint:false},execute({title,url,category,icon}){if(!title?.trim()||!category?.trim()||!/^https?:\/\//i.test(url||''))throw Error('A title, category, and http(s) URL are required');data.bookmarks.push({id:Date.now(),title:title.trim(),url,category:category.trim(),icon:icon||'☆'});save();render();return {saved:true,title}}});register({name:'create_post',title:'Create post',description:'Add a short note to the homepage feed.',inputSchema:{type:'object',properties:{text:{type:'string'}},required:['text'],additionalProperties:false},annotations:{readOnlyHint:false},execute({text}){if(!text?.trim())throw Error('Post text is required');data.posts.push({id:Date.now(),text:text.trim(),date:new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})});save();render();return {saved:true}}})}
+</script><div class="github-storage"><details><summary>GitHub settings</summary><div class="form" style="margin-top:12px"><label>GitHub token (only for this page session)<input id="githubToken" type="password" autocomplete="off" placeholder="Fine-grained token: homepage repo, Contents read/write"></label><small>Save profile uploads its images and data. Public repository contents are visible to everyone.</small><div class="actions" style="flex-wrap:wrap"><button class="action" id="ghLoad">Reload profile</button><button class="action" id="ghSave">Save profile</button><button class="action" id="ghExport">Export profile</button></div><p id="ghStatus" role="status" aria-live="polite"></p></div><div id="profileStatus" role="status" aria-live="polite"></div></details></div><script>const GH_REPO='aleciarf/homepage';
+const PROFILE_FILES=['homepage-data.json','home-page-2.json'];
+let storageBusy=false,loadGeneration=0;
+const storageNode=id=>document.getElementById(id);
+function storageStatus(message){storageNode('ghStatus').textContent=message;storageNode('profileStatus').textContent=message}
+function ghEncode(s){const bytes=new TextEncoder().encode(s);let str='';for(let i=0;i<bytes.length;i+=8192)str+=String.fromCharCode(...bytes.subarray(i,i+8192));return btoa(str)}
+function ghDecode(s){return new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\s/g,'')),c=>c.charCodeAt(0)))}
+function ghValidate(v){if(!v||typeof v!=='object'||Array.isArray(v))throw Error('Invalid profile data');const out={};for(const k of ['name','bio','avatar','bannerTitle','bannerSub','bannerImage']){if(typeof v[k]!=='string')throw Error('Invalid '+k);out[k]=v[k]}for(const k of ['bookmarks','posts','shortcuts']){if(!Array.isArray(v[k]))throw Error('Invalid '+k);out[k]=structuredClone(v[k])}for(const x of out.bookmarks){if(!x||typeof x.title!=='string'||typeof x.category!=='string'||!/^https?:\/\//i.test(x.url))throw Error('Invalid bookmark');new URL(x.url);if(x.appUrl&&(!/^[a-z][a-z0-9+.-]*:/i.test(x.appUrl)||/^(javascript|data|file|blob):/i.test(x.appUrl)))throw Error('Invalid app link')}for(const x of out.posts)if(!x||typeof x.text!=='string'||typeof x.date!=='string')throw Error('Invalid note');for(const x of out.shortcuts){if(x===null)continue;if(!x||typeof x.icon!=='string'||typeof x.link!=='string'||!['app','url'].includes(x.type))throw Error('Invalid shortcut');if(x.type==='url'){const url=new URL(x.link);if(!['https:','http:'].includes(url.protocol))throw Error('Invalid shortcut link')}else if(!/^[a-z][a-z0-9+.-]*:/i.test(x.link)||/^(https?|javascript|data|file|blob):/i.test(x.link))throw Error('Invalid app link')}out.activeTab=['bookmarks','notes','inventory'].includes(v.activeTab)?v.activeTab:'bookmarks';return out}
+async function ghRequest(path,method='GET',body){const token=storageNode('githubToken').value.trim();const headers={Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};if(token)headers.Authorization='Bearer '+token;if(method!=='GET'&&!token)throw Error('Enter a GitHub token to save this profile.');if(body)headers['Content-Type']='application/json';const response=await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+path,{method,headers,body:body?JSON.stringify(body):undefined,cache:'no-store'});if(response.status===404&&method==='GET')return null;if(!response.ok)throw Error(response.status===409||response.status===422?'Repository changed. Reload the profile before saving; export a backup first.':response.status===401||response.status===403?'Check your token and repository Contents permission.':'GitHub request failed ('+response.status+').');return response.json()}
+function setStorageBusy(busy){storageBusy=busy;for(const id of ['ghSave','ghLoad','profileSwitch'])storageNode(id).disabled=busy;document.querySelectorAll('[data-edit],[data-edit-bookmark],[data-delete-bookmark],[data-delete-note],[data-add-shortcut],[data-edit-shortcut]').forEach(el=>el.disabled=busy)}
+async function loadProfile(i,manual=false){const state=profileStates[i],revision=state.revision,generation=++loadGeneration;storageStatus('Loading Profile '+(i+1)+'…');try{const remote=await ghRequest(PROFILE_FILES[i]);if(generation!==loadGeneration||i!==activeProfile)return;if(!remote)throw Error('No repository data found for Profile '+(i+1)+'. Your local data is kept.');const next=ghValidate(JSON.parse(ghDecode(remote.content)));if(state.revision!==revision){storageStatus('Local changes kept. Save when ready.');return}if(state.dirty&&!manual){storageStatus('Local changes kept · Profile '+(i+1)+'. Save or export them before reloading.');return}state.data=next;state.sha=remote.sha;state.dirty=false;state.revision++;data=state.data;cacheProfile(i);render();storageStatus('Profile '+(i+1)+' loaded from '+PROFILE_FILES[i])}catch(error){if(generation===loadGeneration&&i===activeProfile)storageStatus(error.message)}}
+function switchProfile(){if(storageBusy||dlg.open)return;cacheProfile(activeProfile);activeProfile=activeProfile===0?1:0;localStorage.setItem('homepage-active-profile',String(activeProfile));data=profileStates[activeProfile].data;featureEditing=false;render();loadProfile(activeProfile)}
+storageNode('profileSwitch').onclick=switchProfile;
+storageNode('ghLoad').onclick=async()=>{if(storageBusy)return;if(profileStates[activeProfile].dirty&&!confirm('Replace unsaved changes in this profile with its repository data? Export a backup first if needed.'))return;setStorageBusy(true);try{await loadProfile(activeProfile,true)}finally{setStorageBusy(false)}};
+async function uploadMedia(value,i,slot){if(!value||value.startsWith('assets/'))return value;let bytes,mime;if(value.startsWith('data:')){const match=value.match(/^data:(image\/(?:png|jpeg|webp|gif|svg\+xml));base64,([\s\S]+)$/);if(!match)throw Error('Unsupported image format. Use PNG, JPG, WebP or GIF.');mime=match[1];bytes=Uint8Array.from(atob(match[2]),c=>c.charCodeAt(0))}else{const url=new URL(value);if(!['http:','https:'].includes(url.protocol))throw Error('Unsupported image URL');const response=await fetch(url);if(!response.ok)throw Error('Could not download '+slot+' image to save in the repository.');mime=response.headers.get('content-type')?.split(';')[0];bytes=new Uint8Array(await response.arrayBuffer())}if(bytes.length>5*1024*1024)throw Error('Image exceeds 5 MB. Choose a smaller image.');const ext={'image/png':'png','image/jpeg':'jpg','image/webp':'webp','image/gif':'gif','image/svg+xml':'svg'}[mime];if(!ext)throw Error('Unsupported image format');const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');const path='assets/profile-'+(i+1)+'/'+digest+'.'+ext;const existing=await ghRequest(path);if(!existing){let binary='';for(let n=0;n<bytes.length;n+=8192)binary+=String.fromCharCode(...bytes.subarray(n,n+8192));await ghRequest(path,'PUT',{message:'Add Profile '+(i+1)+' '+slot+' image',content:btoa(binary)})}return path}
+async function saveProfile(){if(storageBusy)return;const i=activeProfile,state=profileStates[i],revision=state.revision;setStorageBusy(true);storageStatus('Saving Profile '+(i+1)+'…');try{const remote=await ghRequest(PROFILE_FILES[i]);if(remote&&(!state.sha||remote.sha!==state.sha))throw Error('Repository data changed or has not been loaded. Export your local profile, then reload before saving.');const snapshot=ghValidate(data);snapshot.avatar=await uploadMedia(snapshot.avatar,i,'avatar');snapshot.bannerImage=await uploadMedia(snapshot.bannerImage,i,'feature');for(let n=0;n<snapshot.shortcuts.length;n++)if(snapshot.shortcuts[n])snapshot.shortcuts[n].icon=await uploadMedia(snapshot.shortcuts[n].icon,i,'shortcut '+(n+1));await kitUploadFiles(snapshot,i);const body={message:'Update Profile '+(i+1)+' data',content:ghEncode(JSON.stringify(snapshot,null,2))};if(remote)body.sha=remote.sha;const result=await ghRequest(PROFILE_FILES[i],'PUT',body);state.sha=result.content.sha;if(state.revision===revision){state.data=snapshot;state.dirty=false;data=state.data;render()}cacheProfile(i);storageStatus(state.dirty?'Repository saved; newer local changes are still unsaved.':'Profile '+(i+1)+' and its images saved to '+PROFILE_FILES[i])}catch(error){storageStatus(error.message)}finally{setStorageBusy(false)}}
+storageNode('ghSave').onclick=saveProfile;
+storageNode('ghExport').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=PROFILE_FILES[activeProfile];a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+// Keep the physical switch unavailable while an editor is open.
+const originalOpenEditor=openEditor;openEditor=function(...args){originalOpenEditor(...args);storageNode('profileSwitch').disabled=true};dlg.addEventListener('close',()=>{storageNode('profileSwitch').disabled=storageBusy});
+loadProfile(activeProfile);
+</script><script>
+const kitAssetLabels={textBackground:'TXT viewer background',back:'Back button',next:'Next button',slotNormal:'Item slot · normal',slotSelected:'Item slot · selected',checkboxNormal:'Checkbox · unchecked',checkboxSelected:'Checkbox · checked'};
+let kitEditing=false,kitSelected=new Set(),kitProfile=activeProfile,kitBusy=false,kitViewURL=null,kitViewerGeneration=0;
+const kitID=()=>crypto.randomUUID();
+function kitNormalize(value){const v=value&&typeof value==='object'?structuredClone(value):{};if(!Array.isArray(v.tabs)||!v.tabs.length)v.tabs=[{id:'general',name:'General',items:[]}];const ids=new Set();for(const tab of v.tabs){if(!tab||typeof tab.id!=='string'||ids.has(tab.id)||typeof tab.name!=='string'||!Array.isArray(tab.items))throw Error('Invalid project kit tab');ids.add(tab.id);for(const item of tab.items){if(!item||typeof item.id!=='string'||typeof item.name!=='string'||(!item.localKey&&!item.path))throw Error('Invalid inventory item');if(item.path&&!/^assets\/[a-zA-Z0-9_./-]+$/.test(item.path))throw Error('Invalid inventory file path')}}v.activeTab=ids.has(v.activeTab)?v.activeTab:v.tabs[0].id;v.assets=v.assets&&typeof v.assets==='object'?v.assets:{};for(const key of Object.keys(kitAssetLabels)){const path=v.assets[key]||'';if(typeof path!=='string'||(path&&!/^assets\/[a-zA-Z0-9_./-]+$/.test(path)))throw Error('Use a repository path starting with assets/');v.assets[key]=path}return v}
+const kitNormalized=new WeakSet();function kitData(){if(!data.inventory||!kitNormalized.has(data.inventory)){data.inventory=kitNormalize(data.inventory);kitNormalized.add(data.inventory)}return data.inventory}
+const originalKitValidate=ghValidate;ghValidate=function(v){const out=originalKitValidate(v);out.inventory=kitNormalize(v.inventory);return out};
+const originalKitRender=render;render=function(){originalKitRender();kitRender()};
+const originalKitBusy=setStorageBusy;setStorageBusy=function(busy){originalKitBusy(busy);kitRender()};
+function kitDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open('homepage-kit-files',1);req.onupgradeneeded=()=>req.result.createObjectStore('files');req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(Error('File storage is unavailable in this browser.'))})}
+async function kitStore(key,blob){const db=await kitDB();try{return await new Promise((resolve,reject)=>{const tx=db.transaction('files',blob?'readwrite':'readonly');const req=blob?tx.objectStore('files').put(blob,key):tx.objectStore('files').get(key);let result;req.onsuccess=()=>result=req.result;tx.oncomplete=()=>resolve(result);tx.onerror=()=>reject(Error('Could not store the file. Browser storage may be full.'));tx.onabort=()=>reject(Error('File storage was interrupted.'))})}finally{db.close()}}
+async function kitBlob(item){if(item.localKey){const local=await kitStore(item.localKey);if(local)return local;if(!item.path)throw Error('This local file is unavailable. Add it again from this device.')}const token=document.getElementById('githubToken').value.trim(),headers={Accept:'application/vnd.github.raw+json','X-GitHub-Api-Version':'2022-11-28'};if(token)headers.Authorization='Bearer '+token;const response=await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+item.path,{headers,cache:'no-store'});if(!response.ok)throw Error(response.status===404?'The file was not found in the repository.':'Could not load this file. Check your GitHub token if the repository is private.');return new Blob([await response.arrayBuffer()],{type:item.type||'application/octet-stream'})}
+async function kitUploadFiles(snapshot,profile){for(const tab of snapshot.inventory.tabs)for(const item of tab.items){if(!item.localKey)continue;const blob=await kitBlob(item),bytes=new Uint8Array(await blob.arrayBuffer());const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');const name=item.name.replace(/[^a-zA-Z0-9._-]/g,'_').slice(-100)||'file';const path='assets/profile-'+(profile+1)+'/inventory/'+hash+'-'+name;const remote=await ghRequest(path);if(!remote){let binary='';for(let n=0;n<bytes.length;n+=8192)binary+=String.fromCharCode(...bytes.subarray(n,n+8192));await ghRequest(path,'PUT',{message:'Add inventory file '+name,content:btoa(binary)})}item.path=path;delete item.localKey}}
+function kitMessage(text){document.getElementById('kitMessage').textContent=text}
+function kitArt(path){return path?'url('+JSON.stringify(mediaUrl(path))+')':''}
+function kitRender(){if(kitProfile!==activeProfile){kitProfile=activeProfile;kitEditing=false;kitSelected.clear();kitCloseViewer();document.getElementById('kitAddDialog')?.close()}const inv=kitData(),tab=inv.tabs.find(t=>t.id===inv.activeTab),idx=inv.tabs.indexOf(tab),a=inv.assets,root=document.getElementById('kitRoot');root.innerHTML=`<div class="card inventory-card"><div class="kit-nav"><button id="kitBack" aria-label="Previous inventory tab" ${idx===0?'disabled':''}><img alt="Back" data-kit-arrow="back" src="${esc(a.back?mediaUrl(a.back):'https://raw.githubusercontent.com/aleciarf/homepage/main/asset/ui/back.png')}"></button><div class="kit-section-title"><span id="kitSectionName">${esc(tab.name)}</span><button class="kit-pencil" id="kitEdit" aria-label="${kitEditing?'Finish editing inventory':'Edit inventory'}" title="Edit inventory" aria-pressed="${kitEditing}">✎</button></div><button id="kitNext" aria-label="Next inventory tab" ${idx===inv.tabs.length-1?'disabled':''}><img alt="Next" data-kit-arrow="next" src="${esc(a.next?mediaUrl(a.next):'https://raw.githubusercontent.com/aleciarf/homepage/main/asset/ui/next.png')}"></button></div>${kitEditing?`<div class="kit-tools"><button class="mini-btn" id="kitAdd">Add files</button><button class="mini-btn" id="kitNewTab">New section</button><button class="mini-btn" id="kitRename">Rename section</button><button class="mini-btn" id="kitSelectAll">Select all</button><span>${kitSelected.size} selected</span><select id="kitMoveTarget" aria-label="Destination tab"><option value="">Move to…</option>${inv.tabs.filter(t=>t.id!==tab.id).map(t=>`<option value="${esc(t.id)}">${esc(t.name)}</option>`).join('')}</select><button class="mini-btn" id="kitMove" ${kitSelected.size?'':'disabled'}>Move</button><button class="mini-btn" id="kitRemove" ${kitSelected.size?'':'disabled'}>Remove</button><button class="mini-btn" id="kitDone">Done</button></div><details class="kit-assets"><summary>Custom UI images</summary><form id="kitAssets">${Object.entries(kitAssetLabels).map(([k,label])=>`<label>${label}<input name="${k}" value="${esc(a[k])}" placeholder="assets/inventory/example.png"></label>`).join('')}<button class="mini-btn" type="submit">Save images</button></form></details>`:''}<div class="kit-grid">${tab.items.map(item=>{const selected=kitSelected.has(item.id),path=selected&&a.slotSelected?a.slotSelected:a.slotNormal,check=selected?a.checkboxSelected:a.checkboxNormal;return `<div class="kit-cell"><button class="kit-slot ${selected?'selected':''} ${path?'has-art':''}" data-kit-open="${esc(item.id)}" aria-label="Open ${esc(item.name)}"><span class="kit-ext">${esc(item.name.includes('.')?item.name.split('.').pop().toUpperCase().slice(0,7):'FILE')}</span></button>${kitEditing?`<button class="kit-check ${check?'has-art':''}" role="checkbox" aria-checked="${selected}" aria-label="Select ${esc(item.name)}" data-kit-select="${esc(item.id)}">${check?'':selected?'✓':''}</button>`:''}<span class="kit-name">${esc(item.name)}</span></div>`}).join('')}${Array.from({length:Math.max(0,12-tab.items.length)},()=>`<div class="kit-cell"><button class="kit-slot kit-empty ${a.slotNormal?'has-art':''}" data-kit-empty aria-label="Add files">＋</button></div>`).join('')}</div><div class="kit-msg" id="kitMessage" role="status" aria-live="polite"></div></div>`;
+root.querySelectorAll('[data-kit-arrow]').forEach(img=>{img.addEventListener('error',()=>{if(!img.dataset.fallback){img.dataset.fallback='true';img.src=({'back':'data:image/png;base64,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','next':'data:image/png;base64,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'})[img.dataset.kitArrow]}})});root.querySelectorAll('.kit-slot').forEach(el=>{el.style.backgroundImage=kitArt(el.classList.contains('selected')&&a.slotSelected?a.slotSelected:a.slotNormal)});root.querySelectorAll('.kit-check').forEach(el=>el.style.backgroundImage=kitArt(el.getAttribute('aria-checked')==='true'?a.checkboxSelected:a.checkboxNormal));root.querySelectorAll('button,select,input').forEach(el=>el.disabled=el.disabled||kitBusy||storageBusy);
+document.getElementById('kitEdit').onclick=()=>{kitEditing=!kitEditing;kitSelected.clear();kitRender()};document.getElementById('kitBack').onclick=()=>kitChangeTab(inv.tabs[idx-1].id);document.getElementById('kitNext').onclick=()=>kitChangeTab(inv.tabs[idx+1].id);
+if(!tab.items.length)kitMessage('No files in this kit yet. Use the pencil or an empty slot to add files.');if(kitEditing){document.getElementById('kitAdd').onclick=kitOpenAdd;document.getElementById('kitDone').onclick=()=>{kitEditing=false;kitSelected.clear();kitRender()};document.getElementById('kitNewTab').onclick=()=>{const name=prompt('New section name');if(!name?.trim())return;const id=kitID();inv.tabs.push({id,name:name.trim().slice(0,80),items:[]});inv.activeTab=id;save();kitSelected.clear();kitRender()};document.getElementById('kitRename').onclick=()=>{const name=prompt('Section name',tab.name);if(name?.trim()){tab.name=name.trim().slice(0,80);save();kitRender()}};document.getElementById('kitSelectAll').onclick=()=>{const all=tab.items.every(x=>kitSelected.has(x.id));kitSelected=new Set(all?[]:tab.items.map(x=>x.id));kitRender()};document.getElementById('kitMove').onclick=()=>{const target=inv.tabs.find(t=>t.id===document.getElementById('kitMoveTarget').value);if(!target){kitMessage('Choose a destination tab.');return}const moving=tab.items.filter(x=>kitSelected.has(x.id));target.items.push(...moving);tab.items=tab.items.filter(x=>!kitSelected.has(x.id));save();kitSelected.clear();kitRender();kitMessage(moving.length+' items moved to '+target.name+'.')};document.getElementById('kitRemove').onclick=()=>{if(!confirm('Remove '+kitSelected.size+' selected items from this kit?'))return;tab.items=tab.items.filter(x=>!kitSelected.has(x.id));save();kitSelected.clear();kitRender()};document.getElementById('kitAssets').onsubmit=e=>{e.preventDefault();const values=Object.fromEntries(new FormData(e.target));try{const next=kitNormalize({...inv,assets:values});data.inventory=next;save();kitRender();kitMessage('Custom images saved.')}catch(error){kitMessage(error.message)}}}}
+function kitChangeTab(id){kitData().activeTab=id;kitSelected.clear();save();kitRender()}
+document.getElementById('kitRoot').addEventListener('click',e=>{const select=e.target.closest('[data-kit-select]'),open=e.target.closest('[data-kit-open]');if(kitBusy||storageBusy)return;if(select){const id=select.dataset.kitSelect;kitSelected.has(id)?kitSelected.delete(id):kitSelected.add(id);kitRender()}else if(open){const inv=kitData(),item=inv.tabs.find(t=>t.id===inv.activeTab).items.find(x=>x.id===open.dataset.kitOpen);kitOpenViewer(item)}else if(e.target.closest('[data-kit-empty]'))kitOpenAdd()});
+document.body.insertAdjacentHTML('beforeend',`<dialog class="kit-modal" id="kitViewer"><div class="kit-view-head"><strong id="kitViewerName"></strong><div><button class="mini-btn" id="kitCopy">Copy text</button> <button class="mini-btn" id="kitDownload">Download</button> <button class="mini-btn" id="kitClose">Close</button></div></div><div id="kitViewBody"></div><p id="kitViewStatus" role="status" aria-live="polite"></p></dialog><dialog class="kit-modal" id="kitAddDialog" aria-labelledby="kitAddTitle"><div class="card-head"><span id="kitAddTitle">Add files</span><button type="button" class="remove" id="kitCloseAdd" aria-label="Close">×</button></div><form class="kit-form dialog-body form" id="kitAddForm"><label>Files<input id="kitFiles" type="file" multiple required></label><p>Any file type · up to 10 MB per file. TXT files open here with Copy.</p><p id="kitAddStatus" role="status"></p><div class="actions"><button type="button" class="action" id="kitCancelAdd">Cancel</button><button type="submit" class="action primary" id="kitSubmitAdd">Add to kit</button></div></form></dialog>`);
+function kitOpenAdd(){if(kitBusy||storageBusy)return;document.getElementById('kitAddForm').reset();document.getElementById('kitAddStatus').textContent='';document.getElementById('kitAddDialog').showModal()}
+document.getElementById('kitCloseAdd').onclick=()=>{if(!kitBusy)document.getElementById('kitAddDialog').close()};document.getElementById('kitCancelAdd').onclick=()=>{if(!kitBusy)document.getElementById('kitAddDialog').close()};document.getElementById('kitAddDialog').addEventListener('cancel',e=>{if(kitBusy)e.preventDefault()});document.getElementById('kitAddForm').onsubmit=async e=>{e.preventDefault();const files=Array.from(document.getElementById('kitFiles').files),profile=activeProfile,inv=kitData(),tab=inv.tabs.find(t=>t.id===inv.activeTab);if(files.some(f=>f.size>10*1024*1024)){document.getElementById('kitAddStatus').textContent='Choose files under 10 MB each.';return}kitBusy=true;document.getElementById('kitSubmitAdd').disabled=true;document.getElementById('kitCancelAdd').disabled=true;document.getElementById('kitCloseAdd').disabled=true;document.getElementById('profileSwitch').disabled=true;document.getElementById('ghSave').disabled=true;document.getElementById('ghLoad').disabled=true;let added=0;try{for(const file of files){const key=kitID();await kitStore(key,file);tab.items.push({id:kitID(),name:file.name,size:file.size,type:file.type,localKey:key});added++}save();document.getElementById('kitAddDialog').close()}catch(error){if(added)save();document.getElementById('kitAddStatus').textContent=error.message}finally{kitBusy=false;document.getElementById('kitSubmitAdd').disabled=false;document.getElementById('kitCancelAdd').disabled=false;document.getElementById('kitCloseAdd').disabled=false;document.getElementById('profileSwitch').disabled=storageBusy;document.getElementById('ghSave').disabled=storageBusy;document.getElementById('ghLoad').disabled=storageBusy;if(profile===activeProfile){kitRender();if(added)kitMessage(added+' files added. Save profile to upload them to GitHub.')}}};
+function kitCloseViewer(){kitViewerGeneration++;document.getElementById('kitViewer')?.close();if(kitViewURL){URL.revokeObjectURL(kitViewURL);kitViewURL=null}}
+document.getElementById('kitClose').onclick=kitCloseViewer;document.getElementById('kitViewer').addEventListener('cancel',()=>kitCloseViewer());
+async function kitOpenViewer(item){kitCloseViewer();const generation=kitViewerGeneration,profile=activeProfile,dialog=document.getElementById('kitViewer'),body=document.getElementById('kitViewBody'),status=document.getElementById('kitViewStatus'),copy=document.getElementById('kitCopy'),download=document.getElementById('kitDownload');document.getElementById('kitViewerName').textContent=item.name;body.textContent='Loading…';status.textContent='';copy.hidden=true;download.disabled=true;dialog.showModal();try{const blob=await kitBlob(item);if(generation!==kitViewerGeneration||profile!==activeProfile||!dialog.open)return;kitViewURL=URL.createObjectURL(blob);download.disabled=false;download.onclick=()=>{const a=document.createElement('a');a.href=kitViewURL;a.download=item.name;a.click()};if(/\.txt$/i.test(item.name)||item.type==='text/plain'){const bytes=new Uint8Array(await blob.arrayBuffer());const text=new TextDecoder(bytes[0]===255&&bytes[1]===254?'utf-16le':bytes[0]===254&&bytes[1]===255?'utf-16be':'utf-8').decode(bytes);if(generation!==kitViewerGeneration||!dialog.open)return;const pre=document.createElement('pre');pre.className='kit-text';pre.textContent=text;pre.style.backgroundImage=kitArt(kitData().assets.textBackground);body.replaceChildren(pre);copy.hidden=false;copy.onclick=async()=>{try{await navigator.clipboard.writeText(text);status.textContent='Text copied.'}catch{const range=document.createRange();range.selectNodeContents(pre);const selection=getSelection();selection.removeAllRanges();selection.addRange(range);status.textContent='Text selected. Press Ctrl+C (or Copy on your device).'}}}else{body.textContent='Download this file to open it.';if(/^image\/(png|jpeg|gif|webp|avif|bmp)$/.test(item.type)){const img=document.createElement('img');img.src=kitViewURL;img.className='kit-preview';img.alt=item.name;body.replaceChildren(img)}}}catch(error){if(generation===kitViewerGeneration)body.textContent=error.message}}
+kitRender();
+
+</script><script>
+const noteDrafts=new Map();let noteDraftProfile=activeProfile;
+function noteToday(){const date=new Date();return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0')}
+function noteSync(){const draft=noteDrafts.get(activeProfile)||{text:'',date:noteToday()};document.getElementById('noteText').value=draft.text;document.getElementById('noteDate').value=draft.date;document.getElementById('noteComposeStatus').textContent='';noteDraftProfile=activeProfile;document.querySelectorAll('#noteComposer textarea,#noteComposer input,#noteComposer button').forEach(x=>x.disabled=storageBusy)}
+const noteOriginalRender=render;render=function(){noteOriginalRender();if(noteDraftProfile!==activeProfile)noteSync()};
+const noteOriginalBusy=setStorageBusy;setStorageBusy=function(busy){noteOriginalBusy(busy);document.querySelectorAll('#noteComposer textarea,#noteComposer input,#noteComposer button').forEach(x=>x.disabled=busy)};
+document.getElementById('noteComposer').addEventListener('input',()=>{noteDrafts.set(activeProfile,{text:document.getElementById('noteText').value,date:document.getElementById('noteDate').value})});
+document.getElementById('noteComposer').onsubmit=e=>{e.preventDefault();if(storageBusy)return;const text=document.getElementById('noteText').value.trim(),dateValue=document.getElementById('noteDate').value;if(!text||!/^\d{4}-\d{2}-\d{2}$/.test(dateValue)){document.getElementById('noteComposeStatus').textContent='Enter a note and choose a date.';return}const date=new Date(dateValue+'T12:00:00');if(!Number.isFinite(date.getTime()))return;data.posts.push({id:Date.now(),text,date:date.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})});save();noteDrafts.delete(activeProfile);render();noteSync();document.getElementById('noteComposeStatus').textContent='Posted. Save profile to sync it to GitHub.'};
+noteSync();
+
+</script><script>
+let utilityEditing=false,utilityProfile=activeProfile,utilitySlot=0,utilityIcons=[];
+function utilitiesData(value){return Array.from({length:6},(_,i)=>{const x=value?.[i];if(!x)return null;if(typeof x.icon!=='string'||!/^(?:asset\/)?icons\/[^\x00-\x1f]+\.(png|jpe?g|gif|webp|svg|avif|ico)$/i.test(x.icon))throw Error('Invalid utility icon');const link=x.link||'';if(link&&(!/^[a-z][a-z0-9+.-]*:/i.test(link)||/^(javascript|data|file|blob):/i.test(link)))throw Error('Invalid utility link');return {icon:x.icon,link}})}
+function utilityURL(path){return 'https://raw.githubusercontent.com/aleciarf/homepage/main/'+path.split('/').map(encodeURIComponent).join('/')}
+function renderUtilities(){if(utilityProfile!==activeProfile){utilityProfile=activeProfile;utilityEditing=false;document.getElementById('utilityDialog').close()}const slots=utilitiesData(data.utilities);document.getElementById('utilityEdit').textContent=utilityEditing?'✓':'✎';document.getElementById('utilityEdit').setAttribute('aria-pressed',String(utilityEditing));document.getElementById('utilitySlots').innerHTML=slots.map((x,i)=>{const content=x?`<img src="${esc(utilityURL(x.icon))}" alt="">`:'<span>＋</span>';return x?.link&&!utilityEditing?`<a class="utility-slot" href="${esc(x.link)}" ${/^https?:/i.test(x.link)?'target="_blank" rel="noopener noreferrer"':''} aria-label="Open utility ${i+1}">${content}</a>`:`<button class="utility-slot ${x?'':'utility-empty'}" data-utility="${i}" aria-label="${x?'Edit':'Add'} utility ${i+1}">${content}</button>`}).join('')}
+document.body.insertAdjacentHTML('beforeend',`<dialog id="utilityDialog" aria-labelledby="utilityTitle"><div class="card-head"><span id="utilityTitle">Utility icon</span><button class="remove" id="utilityClose" aria-label="Close">×</button></div><form id="utilityForm" class="dialog-body form"><label>Website or Windows app link (optional)<input id="utilityLink" placeholder="https://example.com or spotify:"></label><p id="utilityStatus" role="status"></p><div id="utilityIconList" class="utility-icon-list"></div><input id="utilityIcon" type="hidden"><div class="actions"><button type="button" class="action" id="utilityClear">Remove</button><button type="submit" class="action primary">Save</button></div></form></dialog>`);
+document.getElementById('utilityEdit').onclick=()=>{utilityEditing=!utilityEditing;renderUtilities()};document.getElementById('utilityClose').onclick=()=>document.getElementById('utilityDialog').close();
+document.getElementById('utilitySlots').onclick=async e=>{const button=e.target.closest('[data-utility]');if(!button||storageBusy)return;utilitySlot=Number(button.dataset.utility);const profile=activeProfile,x=utilitiesData(data.utilities)[utilitySlot];document.getElementById('utilityLink').value=x?.link||'';document.getElementById('utilityIcon').value=x?.icon||'';document.getElementById('utilityIconList').replaceChildren();const status=document.getElementById('utilityStatus');status.textContent='Loading icons…';document.getElementById('utilityDialog').showModal();try{const token=document.getElementById('githubToken').value.trim(),headers={Accept:'application/vnd.github+json'};if(token)headers.Authorization='Bearer '+token;const r=await fetch('https://api.github.com/repos/aleciarf/homepage/contents/asset/icons?ref=main',{headers,cache:'no-store'});if(!r.ok)throw Error(r.status===404?'Add your images to asset/icons in aleciarf/homepage.':'Could not load icons. Try again or check your GitHub token.');const files=await r.json();if(profile!==activeProfile||!document.getElementById('utilityDialog').open)return;utilityIcons=files.filter(f=>f.type==='file'&&/\.(png|jpe?g|gif|webp|svg|avif|ico)$/i.test(f.name));status.textContent=utilityIcons.length?'Choose an icon.':'No images in asset/icons yet.';document.getElementById('utilityIconList').innerHTML=utilityIcons.map(f=>`<button type="button" class="utility-icon-choice ${f.path===x?.icon?'selected':''}" data-icon="${esc(f.path)}" aria-label="Choose ${esc(f.name)}" title="${esc(f.name)}"><img src="${esc(utilityURL(f.path))}" alt=""></button>`).join('')}catch(error){if(profile===activeProfile)status.textContent=error.message}};
+document.getElementById('utilityIconList').onclick=e=>{const b=e.target.closest('[data-icon]');if(!b)return;document.getElementById('utilityIcon').value=b.dataset.icon;document.querySelectorAll('.utility-icon-choice').forEach(x=>x.classList.toggle('selected',x===b))};
+document.getElementById('utilityForm').onsubmit=e=>{e.preventDefault();try{const icon=document.getElementById('utilityIcon').value;if(!icon)throw Error('Choose an icon first.');const slots=utilitiesData(data.utilities);slots[utilitySlot]={icon,link:document.getElementById('utilityLink').value.trim()};data.utilities=utilitiesData(slots);save();renderUtilities();document.getElementById('utilityDialog').close()}catch(error){document.getElementById('utilityStatus').textContent=error.message}};
+document.getElementById('utilityClear').onclick=()=>{const slots=utilitiesData(data.utilities);slots[utilitySlot]=null;data.utilities=slots;save();renderUtilities();document.getElementById('utilityDialog').close()};
+const utilitiesValidate=ghValidate;ghValidate=function(v){const out=utilitiesValidate(v);out.utilities=utilitiesData(v.utilities);return out};const utilitiesRender=render;render=function(){utilitiesRender();renderUtilities()};renderUtilities();
+
+</script><script>
+function utilityPressedCandidates(path){const name=path.split('/').pop(),stem=name.replace(/\.[^.]+$/,''),ext=name.slice(stem.length);let key=stem.replace(/^Grass-/i,'').replace(/^Buttons-/i,'').toLowerCase();if(key==='cellphone')key='cell-phone';if(key==='shoping-trophy')key='trophy';const names=[stem+'-pressed'+ext,stem==='Butto'?'Butto-pressed.png':'Buttons-pressed-'+key+'.png'];return [...new Set(names)].map(n=>utilityURL('asset/icons/Pressed/'+n))}
+function applyUtilityHover(){document.querySelectorAll('.utility-slot:not(.utility-empty)').forEach(slot=>{if(slot.querySelector('.utility-hover'))return;const base=slot.querySelector('img');if(!base)return;const path=decodeURIComponent(new URL(base.src).pathname.split('/main/')[1]||'');const candidates=utilityPressedCandidates(path);const hover=document.createElement('img');hover.alt='';hover.className='utility-hover';let index=0;hover.onload=()=>slot.classList.add('has-pressed');hover.onerror=()=>{if(++index<candidates.length)hover.src=candidates[index];else hover.remove()};hover.src=candidates[0];slot.append(hover)})}
+const utilityHoverRender=renderUtilities;renderUtilities=function(){utilityHoverRender();applyUtilityHover()};applyUtilityHover();
+function artButton(button,kind){if(!button||button.dataset.uiArt)return;button.dataset.uiArt=kind;const label=button.getAttribute('aria-label')||button.textContent.trim()||kind;button.setAttribute('aria-label',label);button.title=label;const text=document.createElement('span');text.className='ui-art-fallback';while(button.firstChild)text.append(button.firstChild);const img=document.createElement('img');img.alt='';img.src=utilityURL('asset/ui/'+kind+'.png');img.onload=()=>button.classList.add('ui-art-ready');img.onerror=()=>img.remove();button.classList.add('ui-art-button');button.append(text,img)}
+function applyUIArt(){document.querySelectorAll('#closeDialog,#cancelDialog,#kitClose,#kitCloseAdd,#kitCancelAdd,#utilityClose').forEach(b=>artButton(b,'close'));document.querySelectorAll('#editForm button[type=submit],#utilityForm button[type=submit],#kitSubmitAdd,#kitAssets button[type=submit],#ghSave').forEach(b=>artButton(b,'save'))}
+applyUIArt();new MutationObserver(applyUIArt).observe(document.body,{childList:true,subtree:true});
+
+</script></body></html>
 
-  <div class="site">
-    <header class="mast">
-      <time id="clock" class="clock"></time>
-    </header>
-
-    <section id="feature" class="feature">
-      <div class="bubble">
-        <svg class="blob" viewBox="0 0 780 330"
-          preserveAspectRatio="none" aria-hidden="true">
-          <path d="M91 48 C184 12 299 15 392 18
-            C505 20 622 12 696 47 C755 75 774 119 757 179
-            C742 252 686 290 592 284 C506 278 434 272 347 284
-            C250 298 165 295 95 273 C30 250 13 186 24 135
-            C33 94 49 64 91 48 Z"/>
-        </svg>
-        <svg class="arch" viewBox="0 0 780 160" role="img"
-          aria-label="Feature space">
-          <defs>
-            <path id="titleCurve" d="M55 108 Q390 48 725 108"/>
-            <path id="subtitleCurve" d="M55 139 Q390 79 725 139"/>
-          </defs>
-          <text><textPath id="featureTitle" href="#titleCurve"
-            startOffset="50%" text-anchor="middle"></textPath></text>
-          <text class="subtitle"><textPath id="featureSubtitle"
-            href="#subtitleCurve" startOffset="50%"
-            text-anchor="middle"></textPath></text>
-        </svg>
-        <div id="slots" class="slots" aria-label="App shortcuts"></div>
-      </div>
-      <button id="featureEdit" class="feature-pencil"
-        aria-label="Edit feature area" title="Edit feature area">✎</button>
-      <div class="character">
-        <div class="character-frame">
-          <span>✦</span>
-          <strong>Character placeholder</strong>
-          <small>your character can go here later</small>
-        </div>
-      </div>
-    </section>
-
-    <div class="layout">
-      <aside class="side">
-        <section class="card">
-          <div class="card-head">
-            <span>PASSPORT &nbsp; ✿ about me</span>
-            <button class="remove" data-edit="profile"
-              aria-label="Edit profile">✎</button>
-          </div>
-          <div class="profile">
-            <div id="avatar" class="avatar"></div>
-            <div class="profile-info">
-              <span class="passport-line">Always be kind ♡</span>
-              <h2 id="profileName"></h2>
-              <p id="profileBio"></p>
-            </div>
-          </div>
-        </section>
-        <section class="card">
-          <div class="card-head">☆ quick jump</div>
-          <div class="quick-jump">
-            <button data-tab="bookmarks">▣ &nbsp; My bookmarks</button>
-            <button data-tab="notes">✎ &nbsp; Little notes</button>
-            <button data-tab="about">☘ &nbsp; About this page</button>
-          </div>
-        </section>
-      </aside>
-
-      <main>
-        <nav class="tabs" aria-label="Sections">
-          <button class="tab" data-tab="bookmarks">★ Bookmarks</button>
-          <button class="tab" data-tab="notes">✎ Notes</button>
-          <button class="tab" data-tab="about">☘ About</button>
-        </nav>
-        <section class="panel" id="bookmarks">
-          <div class="section-head">
-            <div>
-              <h2>Favorite places</h2>
-              <p>Little shortcuts, neatly tucked away.</p>
-            </div>
-            <button class="btn" data-edit="bookmark">＋ Add link</button>
-          </div>
-          <div id="bookmarkList"></div>
-        </section>
-        <section class="panel" id="notes">
-          <div class="section-head">
-            <div>
-              <h2>Little notes</h2>
-              <p>Thoughts, updates, and tiny moments.</p>
-            </div>
-            <button class="btn" data-edit="note">＋ New post</button>
-          </div>
-          <div id="postList"></div>
-        </section>
-        <section class="panel" id="about">
-          <div class="card">
-            <div class="card-head">☘ my homepage</div>
-            <div style="padding:20px;line-height:1.7">
-              <p>Two personal spaces for your links, notes,
-                pictures, and shortcuts.</p>
-              <p>Data loads automatically from your repository.
-                Use Save profile below to save changes and images.</p>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-  </div>
-
-  <p class="footer">made with ♡ and a little bit of clover</p>
-
-  <section class="storage">
-    <details>
-      <summary>GitHub storage · aleciarf/homepage</summary>
-      <div class="form" style="margin-top:12px">
-        <label>GitHub token — only for this page session
-          <input id="githubToken" type="password" autocomplete="off"
-            placeholder="Fine-grained token: homepage repo, Contents read/write">
-        </label>
-        <small>
-          Save profile uploads its pictures and data.
-          Your public repository makes this content public.
-          Your token is never included in saved data.
-        </small>
-        <div class="actions">
-          <button id="reloadProfile" class="btn">Reload profile</button>
-          <button id="saveProfile" class="btn">Save profile</button>
-          <button id="exportProfile" class="btn">Export profile</button>
-        </div>
-      </div>
-    </details>
-    <p id="storageStatus" role="status" aria-live="polite"></p>
-  </section>
-</div>
-
-<dialog id="editor">
-  <div class="card-head">
-    <span id="editorTitle"></span>
-    <button id="closeEditor" class="remove" aria-label="Close">×</button>
-  </div>
-  <form id="editForm" class="form dialog-body">
-    <div id="editorFields" class="form"></div>
-    <div class="actions">
-      <button id="cancelEditor" type="button" class="btn">Cancel</button>
-      <button type="submit" class="btn primary">Save</button>
-    </div>
-  </form>
-</dialog>
-
-<script>
-const REPO = "aleciarf/homepage";
-const BRANCH = "main";
-const FILES = ["homepage-data.json", "home-page-2.json"];
-const RAW = "https://raw.githubusercontent.com/" + REPO + "/" + BRANCH + "/";
-const $ = s => document.querySelector(s);
-const clone = v => structuredClone(v);
-const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({
-  "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
-}[c]));
-
-const CURSOR_BASE64 =
-"iVBORw0KGgoAAAANSUhEUgAAABgAAAAfCAYAAAD9cg1AAAAACXBIWXMAAAWJAAAFiQFtaJ36AAADU0lEQVRIia2WUWwURRjHf3vXo9BCWl5ICTRN9PbBBxRFiN4Go/EVYwzyAOHBB8CHPnj7UGwgBAQSMYFsYuoDETVKoiYYQUg8CiFcGjeGEIXCxUpW4LQEaPXolTvK3e7Njg93u1z3zgrt/pNNZr5vZn7zzXyzM4qUEl3VVgApYBlVFYGjwA7DMvPMQUoynugBbgJKE78EnjIsMztbQAS4CCirN2/g4LWfMCyTAyNDvPbeNmrQL2c7OADJeEIm4wlZcoQM6l6+KA/37hRSSmb7tXig1pZIA3xxRzvbBvZHJm2RHTQ+/eznI0c3AnFgAlhjWOafj7NE/6uOedGe9X3v7n3nq0+e6VjaFQOWAFld1U6FAgCIRhSee3klu9Lfse6D7Z55na5qrq5qA3MG1INe3/QmB0aGWL15A1QToVdXNVtXtbeD7ZVkPCEBDMt8UhYAE5MPOLbzQ0YGz3umKWC9YZmnZxVBULVEQD97jOXPPwvQBqR0VRuFECKol3AlmQvDHH9/H5N37gJcmHME9fISoe/Mt55pjQ+whQwN1D4/5hUVH1B2wwOMT1X8cssM7Z5IBcclXxbky2LaaoQCyJUE2ft2U18om5wrVf7LJUMBRJXpV0n2zDmfHcoSdS+McTNjcT01yK0hk2L1DABsDQUwL6rw1/ET/P7Dj55pDOg3LPNEaFnUs/YlrlYBHxmW2e/ZZwSMFh0AWiMKS9pmnstD19+H2/V2v5cIHLTsfZtcSfj1BbEIi2LNcyJXEjiOn0m/1Pv8HnceVBBSIqRsGBzget7mYcVtGLzguIwWHNyK45lWBSOQgDJVcbn8d6npDAGElPx2r0xna5S22v1dcAQFuwr9JzPiNb3SFCBdiRKZns+XDn+OKJfp6F6O+tYbAP7vIKgbqbMAGJaZDgJKQNvU+BjtXV2+4+Khj7n2/Um/3vXiCyzqXkYzjQ9fxS4WAXJBXwT4AiDdvxtRthFlu37wu8AOgNSW3voD5GvCukF6+y6vuiXoV5LxRCeQ4dG71FMGWGtYZl5Xta+BjQDdr2gsVp8GYOzXYcYuDXvtvzEsc1MDoPb47QSOUH1U/QEMBNdSV7U9QB/VO7deReCQYZl7GsLzAI+r2kRWAq/WTJeB9Ewv8H8BP4iWOx6aSYUAAAAASUVORK5CYII=";
-
-const cursorFallback = "data:image/png;base64," + CURSOR_BASE64;
-const cursorStyle = document.createElement("style");
-cursorStyle.textContent =
-  "*{cursor:url('" + RAW + "assets/Cursor2_32px.png') 0 0," +
-  "url('" + cursorFallback + "') 0 0,auto!important}";
-document.head.append(cursorStyle);
-
-const initial = {
-  bannerTitle:"A little space for something special",
-  bannerSub:"Your future feature belongs here.",
-  bannerImage:"",
-  name:"Your name",
-  bio:"A little introduction goes here. Make this space yours!",
-  avatar:"",
-  shortcuts:Array(8).fill(null),
-  bookmarks:[
-    {id:1,title:"Music",url:"https://open.spotify.com",appUrl:"spotify:",category:"Everyday"},
-    {id:2,title:"Inspiration",url:"https://www.pinterest.com",category:"Everyday"},
-    {id:3,title:"Videos",url:"https://www.youtube.com",category:"Everyday"},
-    {id:4,title:"Mail",url:"https://mail.google.com",category:"Useful"},
-    {id:5,title:"Maps",url:"https://maps.google.com",category:"Useful"}
-  ],
-  posts:[{id:1,text:"Welcome to my little corner of the internet! ☘",date:"Sep 29, 2026"}],
-  activeTab:"bookmarks"
-};
-
-const defaults = [
-  clone(initial),
-  {...clone(initial),bookmarks:[],posts:[]}
-];
-
-function readLocal(key) {
-  try { return JSON.parse(localStorage.getItem(key) || "null"); }
-  catch { return null; }
-}
-
-let active = readLocal("homepage-active-profile") === 1 ? 1 : 0;
-const states = defaults.map((fallback,i) => {
-  const cached = readLocal("homepage-profile-" + i);
-  if (cached?.data) {
-    return {
-      data:{...clone(fallback),...cached.data},
-      dirty:!!cached.dirty,
-      sha:cached.sha || null,
-      revision:0
-    };
-  }
-  const legacy = i === 0 ? readLocal("clover-desk-v1") : null;
-  return {
-    data:legacy ? {...clone(fallback),...legacy} : clone(fallback),
-    dirty:!!legacy,
-    sha:null,
-    revision:0
-  };
-});
-
-let data = states[active].data;
-let featureEditing = false;
-let busy = false;
-let loadGeneration = 0;
-let editingKind = "";
-let editingId = null;
-let notificationCounts = {};
-
-function status(message) {
-  $("#storageStatus").textContent = message;
-}
-
-function cache(i) {
-  try {
-    localStorage.setItem("homepage-profile-" + i, JSON.stringify(states[i]));
-  } catch {
-    status("Browser storage is full. Export your profile or save to GitHub.");
-  }
-}
-
-function saveLocal() {
-  const state = states[active];
-  state.data = data;
-  state.dirty = true;
-  state.revision++;
-  cache(active);
-  status("Unsaved changes · Profile " + (active + 1));
-}
-
-function mediaURL(value) {
-  return value?.startsWith("assets/") ? RAW + value : value || "";
-}
-
-function imageHTML(value,alt="") {
-  return value ? '<img src="' + esc(mediaURL(value)) +
-    '" alt="' + esc(alt) + '">' : "☘";
-}
-
-function updateClock() {
-  const now = new Date();
-  $("#clock").textContent = new Intl.DateTimeFormat(undefined,{
-    weekday:"long",month:"short",day:"numeric",year:"numeric",
-    hour:"2-digit",minute:"2-digit"
-  }).format(now);
-  $("#clock").dateTime = now.toISOString();
-}
-
-function dateLabel() {
-  return new Date().toLocaleDateString(undefined,{
-    year:"numeric",month:"short",day:"numeric"
-  });
-}
-
-function render() {
-  document.documentElement.classList.toggle("night", active === 1);
-  $("#profileSwitch").setAttribute("aria-checked",String(active === 1));
-  $("#profileSwitch").setAttribute("aria-label",
-    "Switch to profile " + (active === 1 ? 1 : 2));
-
-  $("#profileName").textContent = data.name;
-  $("#profileBio").textContent = data.bio;
-  $("#avatar").innerHTML = imageHTML(data.avatar,"Profile picture");
-  $("#featureTitle").textContent = data.bannerTitle;
-  $("#featureSubtitle").textContent = data.bannerSub;
-
-  const length = data.bannerTitle.length;
-  $("#featureTitle").style.fontSize = innerWidth < 560
-    ? (length > 55 ? "29px" : length > 40 ? "38px" : "46px")
-    : (length > 55 ? "24px" : length > 40 ? "29px" : "34px");
-
-  $("#feature").style.backgroundImage = data.bannerImage
-    ? "url(" + JSON.stringify(mediaURL(data.bannerImage)) + ")" : "";
-  $("#feature").classList.toggle("editing",featureEditing);
-  $("#featureEdit").textContent = featureEditing ? "✓" : "✎";
-  $("#featureEdit").setAttribute("aria-label",
-    featureEditing ? "Finish editing feature area" : "Edit feature area");
-
-  $("#slots").innerHTML = Array.from({length:8},(_,i) => {
-    const item = data.shortcuts[i];
-    if (!item) {
-      return '<div class="slot">' +
-        (featureEditing
-          ? '<button class="slot-add" data-shortcut="' + i +
-            '" aria-label="Add shortcut ' + (i+1) + '">+</button>' : "") +
-        "</div>";
-    }
-    const image = '<img src="' + esc(mediaURL(item.icon)) + '" alt="">';
-    return '<div class="slot filled">' +
-      (featureEditing
-        ? '<button class="slot-open" data-shortcut="' + i +
-          '" aria-label="Edit shortcut ' + (i+1) + '">' + image +
-          '</button><button class="slot-edit" data-shortcut="' + i +
-          '" aria-label="Edit shortcut ' + (i+1) + '">✎</button>'
-        : '<a class="slot-open" href="' + esc(item.link) + '" ' +
-          (item.type === "url" ? 'target="_blank" rel="noopener noreferrer" ' : "") +
-          'aria-label="Open shortcut ' + (i+1) + '">' + image + "</a>") +
-      "</div>";
-  }).join("");
-
-  const groups = [...new Set(data.bookmarks.map(x => x.category || "Other"))];
-  $("#bookmarkList").innerHTML = groups.length ? groups.map(group => {
-    const items = data.bookmarks.filter(x => (x.category || "Other") === group);
-    return '<section class="category"><h3>' + esc(group) + "</h3>" +
-      items.map(item => {
-        const app = item.appUrl ||
-          (/^https:\/\/open\.spotify\.com/.test(item.url) ? "spotify:" : "");
-        const host = new URL(item.url).hostname;
-        return '<div class="bookmark"><a href="' + esc(app || item.url) + '" ' +
-          (app ? "" : 'target="_blank" rel="noopener noreferrer" ') +
-          '><strong>' + esc(item.title) + "</strong><small>" +
-          esc(app ? "↗ Open app" : host) + '</small></a>' +
-          '<button class="remove" data-bookmark-edit="' + item.id +
-          '" aria-label="Edit bookmark">✎</button>' +
-          '<button class="remove" data-bookmark-delete="' + item.id +
-          '" aria-label="Remove bookmark">×</button></div>';
-      }).join("") + "</section>";
-  }).join("") : '<div class="empty">No links yet. Add your first favorite place ♡</div>';
-
-  $("#postList").innerHTML = data.posts.length
-    ? [...data.posts].reverse().map(post =>
-      '<article class="post"><div class="post-top"><div class="post-avatar">' +
-      imageHTML(data.avatar) + '</div><div><div class="post-name">' +
-      esc(data.name) + '</div><div class="date">' + esc(post.date) +
-      '</div></div></div><div class="post-body">' + esc(post.text) +
-      '</div><div class="post-foot"><span>♡ a little thought</span>' +
-      '<button class="remove" data-note-delete="' + post.id +
-      '" aria-label="Delete post">×</button></div></article>'
-    ).join("")
-    : '<div class="empty">No posts yet. Write your first little note ♡</div>';
-
-  const selected = data.activeTab || "bookmarks";
-  document.querySelectorAll(".tab").forEach(button => {
-    button.classList.toggle("active",button.dataset.tab === selected);
-    button.setAttribute("aria-selected",String(button.dataset.tab === selected));
-  });
-  document.querySelectorAll(".panel").forEach(panel =>
-    panel.classList.toggle("active",panel.id === selected)
-  );
-  updateBadges();
-  applyBusyState();
-}
-
-function notificationSource(item) {
-  if (!item || item.badgeSource === "none") return null;
-  if (["facebook","messenger","chat","gmail"].includes(item.badgeSource))
-    return item.badgeSource;
-  try {
-    const url = new URL(item.link);
-    if (["messenger.com","www.messenger.com"].includes(url.hostname) ||
-      (url.hostname === "www.facebook.com" && url.pathname.startsWith("/messages")))
-      return "messenger";
-    if (["facebook.com","www.facebook.com"].includes(url.hostname)) return "facebook";
-    if (url.hostname === "mail.google.com") return "gmail";
-    if (url.hostname === "chat.google.com") return "chat";
-  } catch {}
-  return null;
-}
-
-function updateBadges() {
-  document.querySelectorAll(".notification-badge").forEach(x => x.remove());
-  document.querySelectorAll(".slot").forEach((slot,i) => {
-    const reading = notificationCounts[notificationSource(data.shortcuts[i])];
-    if (!reading || !Number.isInteger(reading.count) || reading.count <= 0 ||
-      Date.now() - reading.updatedAt > 300000) return;
-    const badge = document.createElement("b");
-    badge.className = "notification-badge";
-    badge.textContent = reading.count > 99 ? "99+" :
-      String(reading.count) + (reading.approximate ? "+" : "");
-    badge.title = reading.count + " unread";
-    slot.append(badge);
-  });
-}
-
-window.addEventListener("message",event => {
-  if (event.source !== window || event.origin !== location.origin ||
-    event.data?.type !== "homepage-notification-counts-v1") return;
-  const incoming = event.data.counts;
-  if (!incoming || typeof incoming !== "object") return;
-  const clean = {};
-  for (const service of ["facebook","messenger","chat","gmail"]) {
-    const value = incoming[service];
-    if (value && Number.isFinite(value.updatedAt) &&
-      value.updatedAt <= Date.now() + 60000 &&
-      (value.count === null ||
-        (Number.isInteger(value.count) && value.count >= 0 && value.count <= 99999))) {
-      clean[service] = {
-        count:value.count,updatedAt:value.updatedAt,approximate:!!value.approximate
-      };
-    }
-  }
-  notificationCounts = clean;
-  updateBadges();
-});
-
-function field(name,label,value="",type="text",extra="") {
-  return "<label>" + label +
-    (type === "textarea"
-      ? '<textarea name="' + name + '" ' + extra + ">" + esc(value) + "</textarea>"
-      : '<input name="' + name + '" type="' + type + '" value="' + esc(value) +
-        '" ' + extra + ">") + "</label>";
-}
-
-function openEditor(kind,id=null) {
-  if (busy) return;
-  editingKind = kind;
-  editingId = id;
-  let title = "",html = "";
-  const imageTypes = 'accept="image/png,image/jpeg,image/webp,image/gif"';
-
-  if (kind === "profile") {
-    title = "Your profile";
-    html = field("name","Name",data.name,"text",'required maxlength="50"') +
-      field("bio","About you",data.bio,"textarea",'maxlength="240"') +
-      field("avatar","Profile picture","","file",imageTypes);
-  }
-  if (kind === "banner") {
-    title = "Feature area";
-    html = field("title","Title",data.bannerTitle,"text",'required maxlength="80"') +
-      field("sub","Short line",data.bannerSub,"text",'maxlength="120"') +
-      field("image","Landscape image","","file",imageTypes) +
-      "<small>Save the text, then edit the shortcuts. Click the checkmark when finished.</small>";
-  }
-  if (kind === "shortcut") {
-    const item = data.shortcuts[id] || {};
-    title = item.link ? "Edit shortcut" : "Add shortcut";
-    html = '<label>Open<select name="type">' +
-      '<option value="url"' + (item.type !== "app" ? " selected" : "") +
-      '>Website URL</option><option value="app"' +
-      (item.type === "app" ? " selected" : "") + '>Windows app link</option>' +
-      "</select></label>" +
-      field("link","URL or app link",item.link || "","text",
-        'required placeholder="https://example.com or spotify:"') +
-      '<label>Notification badge<select name="badgeSource">' +
-      [
-        ["auto","Automatic"],["none","None"],["facebook","Facebook"],
-        ["messenger","Messenger"],["chat","Google Chat"],["gmail","Gmail"]
-      ].map(([value,label]) =>
-        '<option value="' + value + '"' +
-        ((item.badgeSource || "auto") === value ? " selected" : "") +
-        ">" + label + "</option>"
-      ).join("") + "</select></label>" +
-      field("icon","Icon image","","file",imageTypes + (item.icon ? "" : " required")) +
-      "<small>Only the image appears on the bubble. Save profile to upload it to GitHub.</small>" +
-      (item.link ? '<button type="button" class="btn" id="removeShortcut">Remove shortcut</button>' : "");
-  }
-  if (kind === "bookmark") {
-    const item = data.bookmarks.find(x => x.id === id) || {};
-    title = id === null ? "Add bookmark" : "Edit bookmark";
-    html = field("title","Name",item.title || "","text",'required maxlength="60"') +
-      field("url","Website URL",item.url || "","url",'required') +
-      field("appUrl","Windows app link (optional)",item.appUrl || "") +
-      field("category","Category",item.category || "","text",'required maxlength="40"');
-  }
-  if (kind === "note") {
-    title = "New post";
-    html = field("text","What is on your mind?","","textarea",'required maxlength="1000"');
-  }
-
-  $("#editorTitle").textContent = title;
-  $("#editorFields").innerHTML = html;
-  $("#editor").showModal();
-  applyBusyState();
-}
-
-function closeEditor() {
-  $("#editor").close();
-  $("#editForm").reset();
-}
-
-function validApp(link) {
-  return /^[a-z][a-z0-9+.-]*:/i.test(link) &&
-    !/^(https?|javascript|data|file|blob):/i.test(link);
-}
-
-function validURL(link) {
-  try { return ["http:","https:"].includes(new URL(link).protocol); }
-  catch { return false; }
-}
-
-function readImage(file) {
-  if (file.size > 5 * 1024 * 1024)
-    return Promise.reject(Error("Choose an image smaller than 5 MB."));
-  if (!["image/png","image/jpeg","image/webp","image/gif"].includes(file.type))
-    return Promise.reject(Error("Choose a PNG, JPG, WebP or GIF image."));
-  return new Promise((resolve,reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(Error("Could not read that image."));
-    reader.readAsDataURL(file);
-  });
-}
-
-async function readIcon(file) {
-  const source = await readImage(file);
-  return new Promise((resolve,reject) => {
-    const image = new Image();
-    image.onload = () => {
-      const scale = Math.min(1,128 / Math.max(image.naturalWidth,image.naturalHeight));
-      const canvas = document.createElement("canvas");
-      canvas.width = Math.max(1,Math.round(image.naturalWidth * scale));
-      canvas.height = Math.max(1,Math.round(image.naturalHeight * scale));
-      canvas.getContext("2d").drawImage(image,0,0,canvas.width,canvas.height);
-      resolve(canvas.toDataURL("image/png"));
-    };
-    image.onerror = () => reject(Error("Could not read the icon."));
-    image.src = source;
-  });
-}
-
-$("#editForm").onsubmit = async event => {
-  event.preventDefault();
-  if (busy) return;
-  const f = new FormData(event.target);
-  busy = true;
-  applyBusyState();
-  try {
-    const next = clone(data);
-    if (editingKind === "profile") {
-      next.name = String(f.get("name")).trim();
-      next.bio = String(f.get("bio")).trim();
-      const file = f.get("avatar");
-      if (file?.size) next.avatar = await readImage(file);
-    }
-    if (editingKind === "banner") {
-      next.bannerTitle = String(f.get("title")).trim();
-      next.bannerSub = String(f.get("sub")).trim();
-      const file = f.get("image");
-      if (file?.size) next.bannerImage = await readImage(file);
-    }
-    if (editingKind === "shortcut") {
-      const type = String(f.get("type"));
-      const link = String(f.get("link")).trim();
-      if (type === "url" ? !validURL(link) : !validApp(link))
-        throw Error("Enter a valid website URL or Windows app link.");
-      let icon = next.shortcuts[editingId]?.icon || "";
-      const file = f.get("icon");
-      if (file?.size) icon = await readIcon(file);
-      if (!icon) throw Error("Please choose an icon.");
-      next.shortcuts[editingId] = {
-        type,link,icon,badgeSource:String(f.get("badgeSource") || "auto")
-      };
-    }
-    if (editingKind === "bookmark") {
-      const url = String(f.get("url")).trim();
-      const appUrl = String(f.get("appUrl")).trim();
-      if (!validURL(url)) throw Error("Enter a complete http:// or https:// URL.");
-      if (appUrl && !validApp(appUrl)) throw Error("Enter a valid Windows app link.");
-      const item = {
-        id:editingId ?? Date.now(),
-        title:String(f.get("title")).trim(),url,appUrl,
-        category:String(f.get("category")).trim()
-      };
-      if (editingId === null) next.bookmarks.push(item);
-      else next.bookmarks = next.bookmarks.map(x => x.id === editingId ? item : x);
-    }
-    if (editingKind === "note") {
-      next.posts.push({
-        id:Date.now(),text:String(f.get("text")).trim(),date:dateLabel()
-      });
-    }
-    data = next;
-    saveLocal();
-    closeEditor();
-    render();
-  } catch(error) {
-    alert(error.message);
-  } finally {
-    busy = false;
-    applyBusyState();
-  }
-};
-
-$("#editorFields").onclick = event => {
-  if (event.target.id !== "removeShortcut" || busy) return;
-  data.shortcuts[editingId] = null;
-  saveLocal();
-  closeEditor();
-  render();
-};
-
-$("#closeEditor").onclick = closeEditor;
-$("#cancelEditor").onclick = closeEditor;
-$("#editor").addEventListener("close",applyBusyState);
-$("#editor").addEventListener("cancel",event => {
-  if (busy) event.preventDefault();
-});
-
-$("#featureEdit").onclick = () => {
-  if (busy) return;
-  featureEditing = !featureEditing;
-  render();
-  if (featureEditing) openEditor("banner");
-};
-
-document.addEventListener("click",event => {
-  if (busy) return;
-  const target = event.target.closest("button");
-  if (!target) return;
-
-  if (target.dataset.tab) {
-    data.activeTab = target.dataset.tab;
-    saveLocal();
-    render();
-  }
-  if (target.dataset.edit) openEditor(target.dataset.edit);
-  if (target.dataset.shortcut !== undefined)
-    openEditor("shortcut",Number(target.dataset.shortcut));
-  if (target.dataset.bookmarkEdit !== undefined)
-    openEditor("bookmark",Number(target.dataset.bookmarkEdit));
-  if (target.dataset.bookmarkDelete !== undefined) {
-    data.bookmarks = data.bookmarks.filter(x => String(x.id) !== target.dataset.bookmarkDelete);
-    saveLocal();
-    render();
-  }
-  if (target.dataset.noteDelete !== undefined) {
-    data.posts = data.posts.filter(x => String(x.id) !== target.dataset.noteDelete);
-    saveLocal();
-    render();
-  }
-});
-
-$(".arch").addEventListener("click",() => {
-  if (featureEditing) openEditor("banner");
-});
-
-function applyBusyState() {
-  $("#profileSwitch").disabled = busy || $("#editor").open;
-  $("#reloadProfile").disabled = busy;
-  $("#saveProfile").disabled = busy;
-  $("#closeEditor").disabled = busy;
-  $("#cancelEditor").disabled = busy;
-  $("#editForm").querySelector('button[type="submit"]').disabled = busy;
-  document.querySelectorAll(
-    "[data-edit],[data-shortcut],[data-bookmark-edit]," +
-    "[data-bookmark-delete],[data-note-delete],[data-tab],#featureEdit"
-  ).forEach(button => button.disabled = busy);
-}
-
-function encodeText(value) {
-  const bytes = new TextEncoder().encode(value);
-  let binary = "";
-  for (let i=0;i<bytes.length;i+=8192)
-    binary += String.fromCharCode(...bytes.subarray(i,i+8192));
-  return btoa(binary);
-}
-
-function decodeText(value) {
-  return new TextDecoder().decode(
-    Uint8Array.from(atob(value.replace(/\s/g,"")),c => c.charCodeAt(0))
-  );
-}
-
-function validate(value) {
-  if (!value || typeof value !== "object" || Array.isArray(value))
-    throw Error("Invalid profile data.");
-  const out = {};
-  for (const key of ["name","bio","avatar","bannerTitle","bannerSub","bannerImage"]) {
-    if (typeof value[key] !== "string") throw Error("Invalid " + key + ".");
-    out[key] = value[key];
-  }
-  for (const key of ["bookmarks","posts","shortcuts"]) {
-    if (!Array.isArray(value[key])) throw Error("Invalid " + key + ".");
-    out[key] = clone(value[key]);
-  }
-  for (const item of out.bookmarks) {
-    if (!item || typeof item.title !== "string" ||
-      typeof item.category !== "string" || !validURL(item.url))
-      throw Error("Invalid bookmark.");
-    if (item.appUrl && !validApp(item.appUrl)) throw Error("Invalid app link.");
-  }
-  for (const post of out.posts) {
-    if (!post || typeof post.text !== "string" || typeof post.date !== "string")
-      throw Error("Invalid note.");
-  }
-  for (const item of out.shortcuts) {
-    if (item === null) continue;
-    if (!item || typeof item.icon !== "string" ||
-      !["app","url"].includes(item.type) ||
-      (item.type === "url" ? !validURL(item.link) : !validApp(item.link)))
-      throw Error("Invalid shortcut.");
-  }
-  out.activeTab = ["bookmarks","notes","about"].includes(value.activeTab)
-    ? value.activeTab : "bookmarks";
-  return out;
-}
-
-async function request(path,method="GET",body) {
-  const token = $("#githubToken").value.trim();
-  if (method !== "GET" && !token)
-    throw Error("Enter your GitHub token to save.");
-  const headers = {
-    Accept:"application/vnd.github+json",
-    "X-GitHub-Api-Version":"2022-11-28"
-  };
-  if (token) headers.Authorization = "Bearer " + token;
-  if (body) headers["Content-Type"] = "application/json";
-
-  const url = "https://api.github.com/repos/" + REPO + "/contents/" + path +
-    (method === "GET" ? "?ref=" + encodeURIComponent(BRANCH) : "");
-  const response = await fetch(url,{
-    method,headers,cache:"no-store",
-    body:body ? JSON.stringify({...body,branch:BRANCH}) : undefined
-  });
-  if (response.status === 404 && method === "GET") return null;
-  if (!response.ok) {
-    if ([409,422].includes(response.status))
-      throw Error("Repository changed. Export a backup, then reload before saving.");
-    if ([401,403].includes(response.status))
-      throw Error("Check your token and repository Contents read/write permission.");
-    throw Error("GitHub request failed (" + response.status + ").");
-  }
-  return response.json();
-}
-
-async function loadProfile(i,manual=false) {
-  const state = states[i];
-  const revision = state.revision;
-  const generation = ++loadGeneration;
-  status("Loading Profile " + (i+1) + "…");
-
-  try {
-    const remote = await request(FILES[i]);
-    if (generation !== loadGeneration || i !== active) return;
-    if (state.revision !== revision) {
-      status("Local changes kept. Save when ready.");
-      return;
-    }
-    if (!remote) {
-      state.sha = null;
-      status("Profile " + (i+1) + " has no repository file yet. Save profile to create it.");
-      return;
-    }
-    const next = validate(JSON.parse(decodeText(remote.content)));
-
-    if (state.dirty && !manual) {
-      const localComparable = {...validate(state.data)};
-      if (JSON.stringify(localComparable) !== JSON.stringify(next)) {
-        status("Unsaved local changes kept. Export a backup before reloading.");
-        return;
-      }
-    }
-
-    state.data = next;
-    state.sha = remote.sha;
-    state.dirty = false;
-    state.revision++;
-    data = state.data;
-    cache(i);
-    render();
-    status("Profile " + (i+1) + " loaded from " + FILES[i]);
-  } catch(error) {
-    if (generation === loadGeneration && i === active)
-      status(error.message + " Your local profile is kept.");
-  }
-}
-
-$("#profileSwitch").onclick = () => {
-  if (busy || $("#editor").open) return;
-  cache(active);
-  active = active === 0 ? 1 : 0;
-  try { localStorage.setItem("homepage-active-profile",JSON.stringify(active)); } catch {}
-  data = states[active].data;
-  featureEditing = false;
-  render();
-  loadProfile(active);
-};
-
-$("#reloadProfile").onclick = async () => {
-  if (busy) return;
-  if (states[active].dirty &&
-    !confirm("Replace this profile’s unsaved changes with repository data? Export a backup first if needed."))
-    return;
-  busy = true;
-  applyBusyState();
-  try { await loadProfile(active,true); }
-  finally { busy = false; applyBusyState(); }
-};
-
-async function ensureCursor() {
-  const path = "assets/Cursor2_32px.png";
-  if (!await request(path)) {
-    await request(path,"PUT",{
-      message:"Add homepage cursor",
-      content:CURSOR_BASE64
-    });
-  }
-}
-
-async function uploadImage(value,i,label) {
-  if (!value || value.startsWith("assets/")) return value;
-
-  let bytes,mime;
-  if (value.startsWith("data:")) {
-    const match = value.match(/^data:(image\/(?:png|jpeg|webp|gif));base64,([\s\S]+)$/);
-    if (!match) throw Error("Unsupported image. Use PNG, JPG, WebP or GIF.");
-    mime = match[1];
-    bytes = Uint8Array.from(atob(match[2]),c => c.charCodeAt(0));
-  } else {
-    const url = new URL(value);
-    if (!["http:","https:"].includes(url.protocol)) throw Error("Invalid image URL.");
-    const response = await fetch(url);
-    if (!response.ok) throw Error("Could not download the " + label + " image.");
-    mime = response.headers.get("content-type")?.split(";")[0];
-    bytes = new Uint8Array(await response.arrayBuffer());
-  }
-
-  if (bytes.length > 5 * 1024 * 1024) throw Error("Image exceeds 5 MB.");
-  const extension = {
-    "image/png":"png","image/jpeg":"jpg","image/webp":"webp","image/gif":"gif"
-  }[mime];
-  if (!extension) throw Error("Unsupported image format.");
-
-  const digest = [...new Uint8Array(await crypto.subtle.digest("SHA-256",bytes))]
-    .map(b => b.toString(16).padStart(2,"0")).join("");
-  const path = "assets/profile-" + (i+1) + "/" + digest + "." + extension;
-
-  if (!await request(path)) {
-    let binary = "";
-    for (let n=0;n<bytes.length;n+=8192)
-      binary += String.fromCharCode(...bytes.subarray(n,n+8192));
-    await request(path,"PUT",{
-      message:"Add Profile " + (i+1) + " " + label + " image",
-      content:btoa(binary)
-    });
-  }
-  return path;
-}
-
-$("#saveProfile").onclick = async () => {
-  if (busy || $("#editor").open) return;
-  const i = active;
-  const state = states[i];
-  const revision = state.revision;
-  busy = true;
-  applyBusyState();
-  status("Saving Profile " + (i+1) + "…");
-
-  try {
-    const remote = await request(FILES[i]);
-    if (remote && (!state.sha || remote.sha !== state.sha))
-      throw Error("Repository data changed or has not been loaded. Export your local profile, then reload before saving.");
-
-    const snapshot = validate(data);
-    await ensureCursor();
-    snapshot.avatar = await uploadImage(snapshot.avatar,i,"avatar");
-    snapshot.bannerImage = await uploadImage(snapshot.bannerImage,i,"feature");
-    for (let n=0;n<snapshot.shortcuts.length;n++) {
-      if (snapshot.shortcuts[n])
-        snapshot.shortcuts[n].icon =
-          await uploadImage(snapshot.shortcuts[n].icon,i,"shortcut " + (n+1));
-    }
-
-    const body = {
-      message:"Update Profile " + (i+1) + " data",
-      content:encodeText(JSON.stringify(snapshot,null,2))
-    };
-    if (remote) body.sha = remote.sha;
-    const result = await request(FILES[i],"PUT",body);
-    state.sha = result.content.sha;
-
-    if (state.revision === revision) {
-      state.data = snapshot;
-      state.dirty = false;
-      data = snapshot;
-      render();
-    }
-    cache(i);
-    status(state.dirty
-      ? "Repository saved; newer local changes remain unsaved."
-      : "Profile " + (i+1) + " and its images saved to " + FILES[i]);
-  } catch(error) {
-    status(error.message);
-  } finally {
-    busy = false;
-    applyBusyState();
-  }
-};
-
-$("#exportProfile").onclick = () => {
-  const url = URL.createObjectURL(new Blob(
-    [JSON.stringify(data,null,2)],{type:"application/json"}
-  ));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = FILES[active];
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url),1000);
-};
-
-updateClock();
-setInterval(updateClock,30000);
-setInterval(updateBadges,30000);
-render();
-loadProfile(active);
-</script>
-</body>
-</html>
