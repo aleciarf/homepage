@@ -1,20 +1,11 @@
 {
-  "bannerTitle": "A little space for something special",
-  "bannerSub": "Your future feature belongs here.",
-  "bannerImage": "",
+  "characterImage": "",
   "name": "Your name",
   "bio": "A little introduction goes here. Make this space yours!",
   "avatar": "",
-  "shortcuts": [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null
-  ],
+  "bannerTitle": "A little space for something special",
+  "bannerSub": "Your future feature belongs here.",
+  "bannerImage": "",
   "bookmarks": [
     {
       "id": 1,
@@ -59,5 +50,45 @@
       "text": "Welcome to my little corner of the internet! ☘",
       "date": "Sep 29, 2026"
     }
+  ],
+  "shortcuts": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "activeTab": "bookmarks",
+  "inventory": {
+    "tabs": [
+      {
+        "id": "general",
+        "name": "General",
+        "items": []
+      }
+    ],
+    "activeTab": "general",
+    "assets": {
+      "textBackground": "",
+      "back": "",
+      "next": "",
+      "slotNormal": "",
+      "slotSelected": "",
+      "checkboxNormal": "",
+      "checkboxSelected": ""
+    }
+  },
+  "utilities": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
   ]
 }
