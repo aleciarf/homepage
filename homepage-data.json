@@ -1,10 +1,10 @@
 {
   "characterImage": "",
-  "name": "Your name",
-  "bio": "A little introduction goes here. Make this space yours!",
+  "name": "sseoyi",
+  "bio": "",
   "avatar": "",
-  "bannerTitle": "A little space for something special",
-  "bannerSub": "Your future feature belongs here.",
+  "bannerTitle": "sseoyi's Little Corner",
+  "bannerSub": "All that matters is right here.",
   "bannerImage": "",
   "bookmarks": [
     {
@@ -52,7 +52,12 @@
     }
   ],
   "shortcuts": [
-    null,
+    {
+      "type": "app",
+      "link": "spotify:",
+      "icon": "assets/profile-1/201e08e176ef4adf3dc9ba1e806b491657962051bab689e841a727c884b6ff99.png",
+      "badgeSource": "auto"
+    },
     null,
     null,
     null,
