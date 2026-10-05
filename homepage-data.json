@@ -8,49 +8,23 @@
   "bannerImage": "",
   "bookmarks": [
     {
-      "id": 1,
-      "title": "Music",
-      "url": "https://open.spotify.com",
-      "appUrl": "spotify:",
-      "category": "Everyday",
-      "icon": "♫"
+      "id": 1791163796084,
+      "title": "HW Tools",
+      "url": "https://script.google.com/a/macros/ila.edu.vn/s/AKfycbww-TaR7pZEsABUjcmeoNROdlyqE1LiZFMDbPsV3KiD5wqd3mL1JDTIIgH7tt0UQTDF4g/exec",
+      "appUrl": "",
+      "category": "Work",
+      "icon": "☆"
     },
     {
-      "id": 2,
-      "title": "Inspiration",
-      "url": "https://www.pinterest.com",
-      "category": "Everyday",
-      "icon": "✿"
-    },
-    {
-      "id": 3,
-      "title": "Videos",
-      "url": "https://www.youtube.com",
-      "category": "Everyday",
-      "icon": "▶"
-    },
-    {
-      "id": 4,
-      "title": "Mail",
-      "url": "https://mail.google.com",
-      "category": "Useful",
-      "icon": "✉"
-    },
-    {
-      "id": 5,
-      "title": "Maps",
-      "url": "https://maps.google.com",
-      "category": "Useful",
-      "icon": "⌖"
+      "id": 1791163830964,
+      "title": "Work Guide",
+      "url": "https://script.google.com/a/macros/ila.edu.vn/s/AKfycbxzrQJ0TlyzFr9dlwAbTJ__xvb2nvnnE4cFRDZh7o6yL8LvVRHa9Hiq5Jp8407k770BqQ/exec",
+      "appUrl": "",
+      "category": "Work",
+      "icon": "☆"
     }
   ],
-  "posts": [
-    {
-      "id": 1,
-      "text": "Welcome to my little corner of the internet! ☘",
-      "date": "Sep 29, 2026"
-    }
-  ],
+  "posts": [],
   "shortcuts": [
     {
       "type": "app",
@@ -58,7 +32,12 @@
       "icon": "assets/profile-1/201e08e176ef4adf3dc9ba1e806b491657962051bab689e841a727c884b6ff99.png",
       "badgeSource": "auto"
     },
-    null,
+    {
+      "type": "url",
+      "link": "https://www.messenger.com/t/1714408105308141",
+      "icon": "assets/profile-1/57d6c40b73bfde49d0c5d6ce184c63eceea92e63f90172846e8f48eac856e3c0.png",
+      "badgeSource": "messenger"
+    },
     null,
     null,
     null,
