@@ -33,10 +33,10 @@
       "badgeSource": "auto"
     },
     {
-      "type": "url",
-      "link": "https://www.messenger.com/t/1714408105308141",
-      "icon": "assets/profile-1/57d6c40b73bfde49d0c5d6ce184c63eceea92e63f90172846e8f48eac856e3c0.png",
-      "badgeSource": "messenger"
+      "type": "app",
+      "link": "C:\\Program Files\\Adobe\\Adobe Illustrator 2020\\Support Files\\Contents\\Windows\\Illustrator.exe",
+      "icon": "assets/profile-1/5ccc3f759dd19b7011437a7cf909844284a4347ba1de772e24062ed8c781827d.png",
+      "badgeSource": "none"
     },
     null,
     null,
