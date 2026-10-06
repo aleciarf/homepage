@@ -30,13 +30,15 @@
       "type": "app",
       "link": "spotify:",
       "icon": "assets/profile-1/201e08e176ef4adf3dc9ba1e806b491657962051bab689e841a727c884b6ff99.png",
-      "badgeSource": "auto"
+      "badgeSource": "auto",
+      "hoverText": "Spotify"
     },
     {
       "type": "app",
       "link": "C:\\Program Files\\Adobe\\Adobe Illustrator 2020\\Support Files\\Contents\\Windows\\Illustrator.exe",
       "icon": "assets/profile-1/5ccc3f759dd19b7011437a7cf909844284a4347ba1de772e24062ed8c781827d.png",
-      "badgeSource": "none"
+      "badgeSource": "none",
+      "hoverText": "Adobe Illustrator"
     },
     null,
     null,
@@ -74,5 +76,6 @@
     null,
     null,
     null
-  ]
+  ],
+  "calendar": []
 }
