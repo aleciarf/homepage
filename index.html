@@ -425,16 +425,26 @@ function loadImage(img,url,signal){return new Promise((resolve,reject)=>{
  img.onload=()=>{clean();resolve()};img.onerror=()=>{clean();reject(Error('Butterfly image unavailable'))};timeout=setTimeout(()=>{clean();reject(Error('Butterfly image timed out'))},8000);
  signal.addEventListener('abort',abort,{once:true});if(signal.aborted){abort();return}img.src=url;
 })}
-function fly(actor,start,end,duration,signal){
+// Arc-length sampling keeps movement steady even through curved sections.
+function fly(actor,start,end,speed,signal,mode='cruise'){
  if(reduced.matches){move(actor,end);return Promise.resolve(end)}
- const c1={x:clamp(start.x+between(-180,180),10,innerWidth-10),y:between(35,Math.max(36,innerHeight-35))};
- const c2={x:clamp(end.x+between(-180,180),10,innerWidth-10),y:between(35,Math.max(36,innerHeight-35))};
+ const dx=end.x-start.x,dy=end.y-start.y,distance=Math.hypot(dx,dy)||1;
+ const bend=mode==='takeoff'?0:between(-75,75),nx=-dy/distance,ny=dx/distance;
+ const c1={x:start.x+dx/3+nx*bend,y:start.y+dy/3+ny*bend};
+ const c2={x:start.x+dx*2/3+nx*bend,y:start.y+dy*2/3+ny*bend};
+ function at(t){const u=1-t;return {x:u*u*u*start.x+3*u*u*t*c1.x+3*u*t*t*c2.x+t*t*t*end.x,y:u*u*u*start.y+3*u*u*t*c1.y+3*u*t*t*c2.y+t*t*t*end.y}}
+ const samples=[{t:0,length:0}],steps=120;let previous=start,length=0;
+ for(let i=1;i<=steps;i++){const point=at(i/steps);length+=Math.hypot(point.x-previous.x,point.y-previous.y);samples.push({t:i/steps,length});previous=point}
+ // Cruise stays linear. Only the final 30% of the landing slows to a stop.
+ function progress(t){if(mode!=='landing')return t;if(t<=.7)return t/.85;const u=(t-.7)/.3;return (.7+.3*(u-u*u/2))/.85}
+ const duration=Math.max(500,length/(speed*(mode==='landing'?.85:1))*1000);
  return new Promise((resolve,reject)=>{let began=null,id;const abort=()=>{cancelAnimationFrame(id);signal.removeEventListener('abort',abort);reject(abortError())};signal.addEventListener('abort',abort,{once:true});if(signal.aborted){abort();return}
- function tick(now){if(began===null)began=now;const t=Math.min(1,(now-began)/duration),u=1-t;
-  const p={x:u*u*u*start.x+3*u*u*t*c1.x+3*u*t*t*c2.x+t*t*t*end.x,y:u*u*u*start.y+3*u*u*t*c1.y+3*u*t*t*c2.y+t*t*t*end.y};
-  const dx=3*u*u*(c1.x-start.x)+6*u*t*(c2.x-c1.x)+3*t*t*(end.x-c2.x),dy=3*u*u*(c1.y-start.y)+6*u*t*(c2.y-c1.y)+3*t*t*(end.y-c2.y);
-  move(actor,p,clamp(Math.atan2(dy,Math.abs(dx))*180/Math.PI,-25,25));
-  if(t<1)id=requestAnimationFrame(tick);else{signal.removeEventListener('abort',abort);resolve(end)}
+ function tick(now){if(began===null)began=now;const time=Math.min(1,(now-began)/duration),travel=progress(time)*length;
+  let lo=0,hi=steps;while(lo+1<hi){const mid=(lo+hi)>>1;if(samples[mid].length<travel)lo=mid;else hi=mid}
+  const span=samples[hi].length-samples[lo].length,t=samples[lo].t+(span?(travel-samples[lo].length)/span:0)*(samples[hi].t-samples[lo].t),u=1-t,p=at(t);
+  const vx=3*u*u*(c1.x-start.x)+6*u*t*(c2.x-c1.x)+3*t*t*(end.x-c2.x),vy=3*u*u*(c1.y-start.y)+6*u*t*(c2.y-c1.y)+3*t*t*(end.y-c2.y);
+  move(actor,p,mode==='takeoff'?0:clamp(Math.atan2(vy,Math.abs(vx))*180/Math.PI,-20,20));
+  if(time<1)id=requestAnimationFrame(tick);else{signal.removeEventListener('abort',abort);resolve(end)}
  }id=requestAnimationFrame(tick);
  });
 }
@@ -449,12 +459,15 @@ async function startVisit(){
   try{await loadImage(img,new URL(file,document.baseURI).href,signal)}catch(error){if(signal.aborted)throw error;await loadImage(img,'https://raw.githubusercontent.com/aleciarf/homepage/main/'+file,signal)}
   if(!targetUsable(target))return;
   let point={x:Math.random()<.5?-45:innerWidth+45,y:between(40,Math.max(41,innerHeight-40))};move(actor,point);document.body.append(actor);
-  if(!reduced.matches)for(let i=0;i<3;i++){point=await fly(actor,point,{x:between(35,Math.max(36,innerWidth-35)),y:between(45,Math.max(46,innerHeight-45))},between(650,1050),signal);if(!targetUsable(target))return}
-  point=await fly(actor,point,landingPoint(target,side),1100,signal);if(!targetUsable(target))return;
+  if(!reduced.matches)for(let i=0;i<3;i++){point=await fly(actor,point,{x:between(35,Math.max(36,innerWidth-35)),y:between(45,Math.max(46,innerHeight-45))},90,signal);if(!targetUsable(target))return}
+  point=await fly(actor,point,landingPoint(target,side),90,signal,'landing');if(!targetUsable(target))return;
   actor.classList.add('is-landed');move(actor,landingPoint(target,side));hideHover();showCloud(cloud,pick(MESSAGES),landingPoint(target,side));
   function follow(){if(signal.aborted)return;if(!targetUsable(target)){controller.abort();return}point=landingPoint(target,side);move(actor,point);placeCloud(cloud,point);frame=requestAnimationFrame(follow)}frame=requestAnimationFrame(follow);
   await pause(MESSAGE_DURATION,signal);cancelAnimationFrame(frame);frame=null;hideCloud(cloud);actor.classList.remove('is-landed');
-  await fly(actor,point,{x:Math.random()<.5?-60:innerWidth+60,y:between(30,Math.max(31,innerHeight-30))},1700,signal);
+  // Lift off first, then choose a random exit on any of the four screen edges.
+  point=await fly(actor,point,{x:point.x,y:Math.max(-12,point.y-90)},60,signal,'takeoff');
+  const exit=pick([{x:-60,y:between(30,Math.max(31,innerHeight-30))},{x:innerWidth+60,y:between(30,Math.max(31,innerHeight-30))},{x:between(30,Math.max(31,innerWidth-30)),y:-60},{x:between(30,Math.max(31,innerWidth-30)),y:innerHeight+60}]);
+  await fly(actor,point,exit,90,signal);
  }catch(error){if(error.name!=='AbortError')console.debug('Butterfly visit skipped:',error.message)}
  finally{if(frame!==null){cancelAnimationFrame(frame);frame=null}actor.remove();hideCloud(cloud);if(visit===controller)visit=null}
 }
