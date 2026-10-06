@@ -372,7 +372,12 @@ const VISIT_INTERVAL=5*60*1000, MESSAGE_DURATION=5000;
 const MESSAGES=[
 '(˶˃ ᵕ ˂˶)','𐔌՞ ܸ.ˬ.ܸ՞𐦯','(˶>⩊<˶)','𑣲𝄞','(๑ᵔ⤙ᵔ๑)','˖ ݁♬⋆.˚𝄞','ꉂ(˵˃ ᗜ ˂˵)','(๑ᵔ⤙ᵔ๑)','(˶˃𐃷˂˶)','಄಄಄','(╥﹏╥)','◝(ᵔᗜᵔ)◜','ദ്ദി(˵ •̀ ᴗ - ˵ ) ✧','(˶ᵔ ᵕ ᵔ˶) ‹𝟹','(˶ˆᗜˆ˵)','(¬`‸´¬)','(,; ⩌ ;,)','(,,>﹏<,,)','٩(ˊᗜˋ*)و ♡','(╥ ᴗ ╥)','ദ്ദി˙∇˙)ว','(ᵕ⸝⸝• ᴗ •)','(..◜ᴗ◝..)','( ˶°ㅁ°) !!'
 ];
-const BUTTERFLIES=Array.from({length:12},(_,i)=>'asset/Butterfly/Butterfly-'+(i+1)+'.png');
+// Each sprite's antenna direction, calibrated from its actual artwork.
+const BUTTERFLIES=[-78,-100,-95,30,-15,165,-150,-135,25,-45,-155,-40].map((headAngle,i)=>({path:'asset/Butterfly/Butterfly-'+(i+1)+'.png',headAngle}));
+const facingAngles=new WeakMap();
+const headAngle=actor=>Number(actor.dataset.headAngle??-78);
+const restingAngle=actor=>-90-headAngle(actor);
+const shortestTurn=(from,to)=>((to-from+180)%360+360)%360-180;
 const pick=list=>list[Math.floor(Math.random()*list.length)];
 const between=(lo,hi)=>lo+Math.random()*(hi-lo);
 const clamp=(n,lo,hi)=>Math.max(lo,Math.min(hi,n));
@@ -418,7 +423,7 @@ function abortError(){return new DOMException('Visit cancelled','AbortError')}
 function pause(ms,signal){return new Promise((resolve,reject)=>{if(signal.aborted){reject(abortError());return}const done=()=>{clearTimeout(id);signal.removeEventListener('abort',abort);resolve()},abort=()=>{clearTimeout(id);signal.removeEventListener('abort',abort);reject(abortError())},id=setTimeout(done,ms);signal.addEventListener('abort',abort,{once:true})})}
 function landingPoint(target,side){const r=target.getBoundingClientRect();return {x:r.left+r.width*side,y:r.top-4}}
 function targetUsable(target){return target.isConnected&&candidates().includes(target)&&!modalOpen()&&!document.hidden}
-function move(actor,point,angle=0){actor.style.transform=`translate3d(${point.x-19}px,${point.y-19}px,0) rotate(${angle}deg)`}
+function move(actor,point,angle=restingAngle(actor)){actor.style.transform=`translate3d(${point.x-19}px,${point.y-19}px,0) rotate(${angle}deg)`}
 function loadImage(img,url,signal){return new Promise((resolve,reject)=>{
  let timeout;function clean(){clearTimeout(timeout);img.onload=img.onerror=null;signal.removeEventListener('abort',abort)}
  function abort(){clean();reject(abortError())}
@@ -438,12 +443,18 @@ function fly(actor,start,end,speed,signal,mode='cruise'){
  // Cruise stays linear. Only the final 30% of the landing slows to a stop.
  function progress(t){if(mode!=='landing')return t;if(t<=.7)return t/.85;const u=(t-.7)/.3;return (.7+.3*(u-u*u/2))/.85}
  const duration=Math.max(500,length/(speed*(mode==='landing'?.85:1))*1000);
- return new Promise((resolve,reject)=>{let began=null,id;const abort=()=>{cancelAnimationFrame(id);signal.removeEventListener('abort',abort);reject(abortError())};signal.addEventListener('abort',abort,{once:true});if(signal.aborted){abort();return}
+ return new Promise((resolve,reject)=>{let began=null,id,lastFrame=null;const abort=()=>{cancelAnimationFrame(id);signal.removeEventListener('abort',abort);reject(abortError())};signal.addEventListener('abort',abort,{once:true});if(signal.aborted){abort();return}
  function tick(now){if(began===null)began=now;const time=Math.min(1,(now-began)/duration),travel=progress(time)*length;
   let lo=0,hi=steps;while(lo+1<hi){const mid=(lo+hi)>>1;if(samples[mid].length<travel)lo=mid;else hi=mid}
   const span=samples[hi].length-samples[lo].length,t=samples[lo].t+(span?(travel-samples[lo].length)/span:0)*(samples[hi].t-samples[lo].t),u=1-t,p=at(t);
   const vx=3*u*u*(c1.x-start.x)+6*u*t*(c2.x-c1.x)+3*t*t*(end.x-c2.x),vy=3*u*u*(c1.y-start.y)+6*u*t*(c2.y-c1.y)+3*t*t*(end.y-c2.y);
-  move(actor,p,mode==='takeoff'?0:clamp(Math.atan2(vy,Math.abs(vx))*180/Math.PI,-20,20));
+  let desired=Math.atan2(vy,vx)*180/Math.PI-headAngle(actor);
+  // Settle into an antenna-up resting pose during the final landing slowdown.
+  if(mode==='landing'&&time>.8){const blend=(time-.8)/.2;desired+=shortestTurn(desired,restingAngle(actor))*blend*blend*(3-2*blend)}
+  let facing=facingAngles.get(actor)??desired;
+  const dt=lastFrame===null?16:Math.min(50,now-lastFrame);lastFrame=now;
+  facing+=shortestTurn(facing,desired)*(1-Math.exp(-dt/95));
+  facingAngles.set(actor,facing);move(actor,p,facing);
   if(time<1)id=requestAnimationFrame(tick);else{signal.removeEventListener('abort',abort);resolve(end)}
  }id=requestAnimationFrame(tick);
  });
@@ -455,13 +466,13 @@ async function startVisit(){
  const controller=new AbortController();visit=controller;const signal=controller.signal;
  const actor=document.createElement('div');actor.className='homepage-butterfly';actor.setAttribute('aria-hidden','true');const img=document.createElement('img');img.alt='';actor.append(img);
  try{
-  const file=pick(BUTTERFLIES);
+  const artwork=pick(BUTTERFLIES),file=artwork.path;actor.dataset.headAngle=String(artwork.headAngle);
   try{await loadImage(img,new URL(file,document.baseURI).href,signal)}catch(error){if(signal.aborted)throw error;await loadImage(img,'https://raw.githubusercontent.com/aleciarf/homepage/main/'+file,signal)}
   if(!targetUsable(target))return;
   let point={x:Math.random()<.5?-45:innerWidth+45,y:between(40,Math.max(41,innerHeight-40))};move(actor,point);document.body.append(actor);
   if(!reduced.matches)for(let i=0;i<3;i++){point=await fly(actor,point,{x:between(35,Math.max(36,innerWidth-35)),y:between(45,Math.max(46,innerHeight-45))},90,signal);if(!targetUsable(target))return}
   point=await fly(actor,point,landingPoint(target,side),90,signal,'landing');if(!targetUsable(target))return;
-  actor.classList.add('is-landed');move(actor,landingPoint(target,side));hideHover();showCloud(cloud,pick(MESSAGES),landingPoint(target,side));
+  actor.classList.add('is-landed');facingAngles.set(actor,restingAngle(actor));move(actor,landingPoint(target,side));hideHover();showCloud(cloud,pick(MESSAGES),landingPoint(target,side));
   function follow(){if(signal.aborted)return;if(!targetUsable(target)){controller.abort();return}point=landingPoint(target,side);move(actor,point);placeCloud(cloud,point);frame=requestAnimationFrame(follow)}frame=requestAnimationFrame(follow);
   await pause(MESSAGE_DURATION,signal);cancelAnimationFrame(frame);frame=null;hideCloud(cloud);actor.classList.remove('is-landed');
   // Lift off first, then choose a random exit on any of the four screen edges.
