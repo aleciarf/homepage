@@ -1,29 +1,12 @@
 {
-  "characterImage": "",
+  "characterImage": "assets/profile-1/3f886b2da1592702b9bb987d20f584df62831994f4e8fb0ccce0e3b0433a0853.png",
   "name": "sseoyi",
   "bio": "",
   "avatar": "",
   "bannerTitle": "sseoyi's Little Corner",
   "bannerSub": "All that matters is right here.",
-  "bannerImage": "",
-  "bookmarks": [
-    {
-      "id": 1791163796084,
-      "title": "HW Tools",
-      "url": "https://script.google.com/a/macros/ila.edu.vn/s/AKfycbww-TaR7pZEsABUjcmeoNROdlyqE1LiZFMDbPsV3KiD5wqd3mL1JDTIIgH7tt0UQTDF4g/exec",
-      "appUrl": "",
-      "category": "Work",
-      "icon": "☆"
-    },
-    {
-      "id": 1791163830964,
-      "title": "Work Guide",
-      "url": "https://script.google.com/a/macros/ila.edu.vn/s/AKfycbxzrQJ0TlyzFr9dlwAbTJ__xvb2nvnnE4cFRDZh7o6yL8LvVRHa9Hiq5Jp8407k770BqQ/exec",
-      "appUrl": "",
-      "category": "Work",
-      "icon": "☆"
-    }
-  ],
+  "bannerImage": "assets/profile-1/f0f2ba8c82d7024fce76c50b9657b5c5d89aafde8194d8dc4220c6d4dedaa0e0.png",
+  "bookmarks": [],
   "posts": [],
   "shortcuts": [
     {
@@ -68,7 +51,10 @@
     }
   },
   "utilities": [
-    null,
+    {
+      "icon": "asset/icons/Buttons-=.png",
+      "link": "https://phuongm1409.github.io/html-list/"
+    },
     null,
     null,
     null,
