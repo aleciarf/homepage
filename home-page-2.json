@@ -1,0 +1,56 @@
+{
+  "characterImage": "assets/profile-2/c143b7781d6e700092def079060f014200d0bcaf46153aa5f080f52e7f5bbead.png",
+  "name": "Your name",
+  "bio": "A little introduction goes here. Make this space yours!",
+  "avatar": "",
+  "bannerTitle": "Time to rock!",
+  "bannerSub": "Go my man.",
+  "bannerImage": "assets/profile-2/27d774cadfc40782c8f36ac63d00a2edf577c40a3cb33f446cfa114f9bc288ce.png",
+  "bookmarks": [],
+  "posts": [],
+  "shortcuts": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "activeTab": "bookmarks",
+  "inventory": {
+    "tabs": [
+      {
+        "id": "general",
+        "name": "General",
+        "items": []
+      }
+    ],
+    "activeTab": "general",
+    "assets": {
+      "textBackground": "",
+      "back": "",
+      "next": "",
+      "slotNormal": "",
+      "slotSelected": "",
+      "checkboxNormal": "",
+      "checkboxSelected": ""
+    }
+  },
+  "utilities": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "calendar": []
+}
