@@ -6,7 +6,48 @@
   "bannerTitle": "sseoyi's Little Corner",
   "bannerSub": "All that matters is right here.",
   "bannerImage": "assets/profile-1/f0f2ba8c82d7024fce76c50b9657b5c5d89aafde8194d8dc4220c6d4dedaa0e0.png",
-  "bookmarks": [],
+  "bookmarks": [
+    {
+      "id": 1791872276571,
+      "title": "DCD Personal Tracker",
+      "url": "https://docs.google.com/spreadsheets/d/1zLD-Yw0v88RamRyzF1qUhyV0t0bjs9IHO8e4PmJVbyU/edit?gid=808261701#gid=808261701",
+      "appUrl": "",
+      "category": "Work Documents",
+      "icon": "☆"
+    },
+    {
+      "id": 1791872292330,
+      "title": "PM - Task Tracker",
+      "url": "https://docs.google.com/spreadsheets/d/1CuBLWgO_bVWD2x7iG05T6W_GYfHDk2BsIPMuAkMxbZc/edit?gid=1715374300#gid=1715374300",
+      "appUrl": "",
+      "category": "Work Documents",
+      "icon": "☆"
+    },
+    {
+      "id": 1791872311986,
+      "title": "Team Hub",
+      "url": "https://script.google.com/a/macros/ila.edu.vn/s/AKfycbwmnBjLvOC78E3567qsrIWt6FHo0DBlOU9BjyGdQCzk3OI5K45JJ2TmPPfLWEcXonGmeg/exec?pli=1",
+      "appUrl": "",
+      "category": "Workspace",
+      "icon": "☆"
+    },
+    {
+      "id": 1791872322043,
+      "title": "HW Tools",
+      "url": "https://script.google.com/a/macros/ila.edu.vn/s/AKfycbww-TaR7pZEsABUjcmeoNROdlyqE1LiZFMDbPsV3KiD5wqd3mL1JDTIIgH7tt0UQTDF4g/exec",
+      "appUrl": "",
+      "category": "Workspace",
+      "icon": "☆"
+    },
+    {
+      "id": 1791872351203,
+      "title": "Working Folder",
+      "url": "https://drive.google.com/drive/folders/1reij36zbPE7Rw0DC3k7E58A734emyG8b",
+      "appUrl": "",
+      "category": "Workspace",
+      "icon": "☆"
+    }
+  ],
   "posts": [],
   "shortcuts": [
     {
