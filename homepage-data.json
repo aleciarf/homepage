@@ -63,5 +63,18 @@
     null,
     null
   ],
-  "calendar": []
+  "calendar": [
+    {
+      "id": "d927c091-250a-4049-a885-0e6bfba35f95",
+      "title": "Pay Day",
+      "date": "2026-10-29",
+      "time": ""
+    },
+    {
+      "id": "649de62d-e7c8-4021-a8b5-902b812423ef",
+      "title": "Alyce",
+      "date": "2026-10-30",
+      "time": ""
+    }
+  ]
 }
