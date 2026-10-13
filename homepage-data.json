@@ -76,5 +76,17 @@
       "date": "2026-10-30",
       "time": ""
     }
+  ],
+  "todos": [
+    {
+      "id": "pip2-afcd93c11b911cc1bdef89a81a68572727e8a37f26e3e5f021fc58d9e597aa9a",
+      "text": "[PIP2] Write desc for SJ_A2_019",
+      "done": false
+    },
+    {
+      "id": "pip2-c0def096475cc09e15854b163404b081997a69ef07b581e73616cbb9dea77db1",
+      "text": "[PIP2] Write desc for SJ_A2_032",
+      "done": false
+    }
   ]
 }
