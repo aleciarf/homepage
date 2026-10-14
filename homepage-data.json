@@ -148,6 +148,12 @@
       "text": "[PIP2] Revise desc for SJ_A2_018",
       "done": true,
       "color": ""
+    },
+    {
+      "id": "pip2-62121463ef2aceeda677f658f7448f7df1c85832aa73281a917d02ad1ae0ec8e",
+      "text": "[PIP2] Revise desc for SJ_A2_019",
+      "done": false,
+      "color": ""
     }
   ]
 }
