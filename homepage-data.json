@@ -136,6 +136,12 @@
       "text": "[PIP2] Write desc for SJ_A2_018",
       "done": true,
       "color": "#2563eb"
+    },
+    {
+      "id": "pip2-88630a670b9b1837e58abd518805a907f3118dc67e732f4b5b61b6c64e821d59",
+      "text": "[PIP2] Revise desc for SJ_A2_017",
+      "done": false,
+      "color": ""
     }
   ]
 }
