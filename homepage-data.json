@@ -140,13 +140,13 @@
     {
       "id": "pip2-88630a670b9b1837e58abd518805a907f3118dc67e732f4b5b61b6c64e821d59",
       "text": "[PIP2] Revise desc for SJ_A2_017",
-      "done": false,
+      "done": true,
       "color": ""
     },
     {
       "id": "pip2-ed596a165138faaec98ceaa9145bae91ddc7ad07c304c63cc7f3e77187dabc4e",
       "text": "[PIP2] Revise desc for SJ_A2_018",
-      "done": false,
+      "done": true,
       "color": ""
     }
   ]
