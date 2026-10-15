@@ -71,13 +71,28 @@
     null,
     null
   ],
-  "activeTab": "bookmarks",
+  "activeTab": "inventory",
   "inventory": {
     "tabs": [
       {
         "id": "general",
         "name": "General",
-        "items": []
+        "items": [
+          {
+            "id": "67829e9b-490b-4fae-8426-8d3ef5b27999",
+            "name": "PIP2_HW_IMG_Guide @phuong.md",
+            "size": 13119,
+            "type": "",
+            "path": "assets/profile-1/inventory/ba552a0590dfcf3a232eba67d494e8a3fc681732405d8da1720015168b70a315-PIP2_HW_IMG_Guide__phuong.md"
+          },
+          {
+            "id": "d3560055-5955-480d-8560-7ca36ea435b0",
+            "name": "PIP2_HW_Desc_Guide @phuong.md",
+            "size": 18666,
+            "type": "",
+            "path": "assets/profile-1/inventory/a35d6b8fb45ce6311cdb2f3cedc595275ee78081dbc164cca7a7b2e53e55577a-PIP2_HW_Desc_Guide__phuong.md"
+          }
+        ]
       }
     ],
     "activeTab": "general",
@@ -122,38 +137,32 @@
     {
       "id": "pip2-afcd93c11b911cc1bdef89a81a68572727e8a37f26e3e5f021fc58d9e597aa9a",
       "text": "[PIP2] Write desc for SJ_A2_019",
-      "done": true,
-      "color": "#2563eb"
+      "done": true
     },
     {
       "id": "pip2-c0def096475cc09e15854b163404b081997a69ef07b581e73616cbb9dea77db1",
       "text": "[PIP2] Write desc for SJ_A2_032",
-      "done": false,
-      "color": "#2563eb"
+      "done": false
     },
     {
       "id": "pip2-26d4a9f1817d1f4d208da76986c4d891b82a3a5bbf1e2f097494364d20c358ac",
       "text": "[PIP2] Write desc for SJ_A2_018",
-      "done": true,
-      "color": "#2563eb"
+      "done": true
     },
     {
       "id": "pip2-88630a670b9b1837e58abd518805a907f3118dc67e732f4b5b61b6c64e821d59",
       "text": "[PIP2] Revise desc for SJ_A2_017",
-      "done": true,
-      "color": ""
+      "done": true
     },
     {
       "id": "pip2-ed596a165138faaec98ceaa9145bae91ddc7ad07c304c63cc7f3e77187dabc4e",
       "text": "[PIP2] Revise desc for SJ_A2_018",
-      "done": true,
-      "color": ""
+      "done": true
     },
     {
       "id": "pip2-62121463ef2aceeda677f658f7448f7df1c85832aa73281a917d02ad1ae0ec8e",
       "text": "[PIP2] Revise desc for SJ_A2_019",
-      "done": true,
-      "color": ""
+      "done": true
     }
   ]
 }
