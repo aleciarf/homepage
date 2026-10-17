@@ -71,7 +71,7 @@
     null,
     null
   ],
-  "activeTab": "bookmarks",
+  "activeTab": "inventory",
   "inventory": {
     "tabs": [
       {
@@ -91,6 +91,13 @@
             "size": 18666,
             "type": "",
             "path": "assets/profile-1/inventory/a35d6b8fb45ce6311cdb2f3cedc595275ee78081dbc164cca7a7b2e53e55577a-PIP2_HW_Desc_Guide__phuong.md"
+          },
+          {
+            "id": "6e4f6a7c-ea21-4659-aca4-53deb038a367",
+            "name": "Bounce Expression.txt",
+            "size": 368,
+            "type": "text/plain",
+            "path": "assets/profile-1/inventory/257e906c48fbe9123a3ac18e13f8ab249207b827ea6445a423a3e47a24bd2248-Bounce_Expression.txt"
           }
         ]
       }
