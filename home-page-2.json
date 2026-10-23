@@ -22,13 +22,21 @@
     null,
     null
   ],
-  "activeTab": "bookmarks",
+  "activeTab": "inventory",
   "inventory": {
     "tabs": [
       {
         "id": "general",
         "name": "General",
-        "items": []
+        "items": [
+          {
+            "id": "819d180d-8cfa-4fa1-90e8-5ef9463fd5b7",
+            "name": "MIZI AURA.txt",
+            "size": 310,
+            "type": "text/plain",
+            "path": "assets/profile-2/inventory/16f651fbbd89d941181c650b0571744b3e73a94462c20c5a71f301e8aff2f224-MIZI_AURA.txt"
+          }
+        ]
       }
     ],
     "activeTab": "general",
@@ -52,5 +60,12 @@
     null,
     null
   ],
-  "calendar": []
+  "calendar": [],
+  "todos": [
+    {
+      "id": "b2d2c16f-7a2f-400e-9b9a-28b703fa9da5",
+      "text": "AURA MIZI",
+      "done": false
+    }
+  ]
 }
